@@ -284,15 +284,17 @@ export default function Hero() {
           </a>
 
           {/* Action Resume Download */}
-          <button
-            onClick={() => window.open("mailto:waqarhaidertufian@gmail.com")}
-            className="w-full sm:w-auto relative group px-8 py-4 rounded-xl font-bold font-sans text-xs tracking-wider uppercase text-slate-300 bg-[#090520]/80 border border-white/5 backdrop-blur-md overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400/30"
+          <a
+            href="/cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto relative group px-8 py-4 rounded-xl font-bold font-sans text-xs tracking-wider uppercase text-slate-300 bg-[#090520]/80 border border-white/5 backdrop-blur-md overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400/30 text-center flex items-center justify-center"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               <FileText className="w-4 h-4 text-cyan-400" />
               Get CV / Resume
             </span>
-          </button>
+          </a>
 
           {/* Action Direct Contact */}
           <a
