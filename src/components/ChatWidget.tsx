@@ -22,8 +22,19 @@ export default function ChatWidget() {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [sessionId, setSessionId] = useState("");
   
   const chatScrollRef = useRef<HTMLDivElement | null>(null);
+
+  // Initialize or fetch unique session ID
+  useEffect(() => {
+    let sid = sessionStorage.getItem("portfolio_chat_session_id");
+    if (!sid) {
+      sid = "session_" + Math.random().toString(36).substring(2, 15) + "_" + Date.now();
+      sessionStorage.setItem("portfolio_chat_session_id", sid);
+    }
+    setSessionId(sid);
+  }, []);
 
   // Auto scroll to latest statement
   useEffect(() => {
@@ -57,7 +68,11 @@ export default function ChatWidget() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: textToSend, history: historyContext })
+        body: JSON.stringify({ 
+          message: textToSend, 
+          history: historyContext,
+          sessionId: sessionId || sessionStorage.getItem("portfolio_chat_session_id") || "unknown"
+        })
       });
 
       if (!response.ok) {

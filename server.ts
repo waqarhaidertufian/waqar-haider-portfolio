@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
+import { sql } from "@vercel/postgres";
 
 dotenv.config();
 
@@ -21,6 +22,45 @@ if (apiKey) {
   });
 } else {
   console.warn("WARNING: GEMINI_API_KEY environment variable is not set. Chat widget will operate in fallback mode.");
+}
+
+let dbInitialized = false;
+
+async function initDb() {
+  if (dbInitialized) return;
+  if (!process.env.POSTGRES_URL) {
+    console.warn("WARNING: POSTGRES_URL is not set. Database integration will run in offline simulation mode.");
+    return;
+  }
+  try {
+    // Create contact_submissions table
+    await sql`
+      CREATE TABLE IF NOT EXISTS contact_submissions (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        subject VARCHAR(255),
+        message TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    
+    // Create chat_logs table
+    await sql`
+      CREATE TABLE IF NOT EXISTS chat_logs (
+        id SERIAL PRIMARY KEY,
+        session_id VARCHAR(255),
+        sender VARCHAR(50) NOT NULL,
+        message_text TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    
+    dbInitialized = true;
+    console.log("Database tables initialized successfully (Local).");
+  } catch (error) {
+    console.error("Error initializing database tables (Local):", error);
+  }
 }
 
 const WAQAR_FACT_SHEET = `
@@ -57,7 +97,7 @@ Instructions for your responses:
 - Keep answers relatively concise, professional, and directly helpful.
 - Avoid repeating this full list of credentials unless asked. Just retrieve relevant answers naturally.
 - Highlight Waqar's email, whatsapp, and location beautifully when people ask how to contact or hire him.
-- If they ask general setup questions, feel free to give helpful technical guidance, but keep the core focus on Waqar.
+- If they ask general setup questions, feel free to give helpful technical guidance, but keep the focus on Waqar.
 - Adopt a premium, futuristic luxury tone, matching the portfolio's aesthetics.
 `;
 
@@ -67,12 +107,68 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Initialize DB on server start
+  if (process.env.POSTGRES_URL) {
+    await initDb();
+  }
+
+  // API Route for Contact Form Submission
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const { name, email, subject, message } = req.body;
+
+      if (!name || !email || !message) {
+        return res.status(400).json({ error: "Name, email, and message are required." });
+      }
+
+      if (!process.env.POSTGRES_URL) {
+        console.warn("POSTGRES_URL is missing. Simulating contact submission.");
+        return res.json({
+          success: true,
+          message: "Simulation: Contact form submitted successfully (Local).",
+          data: { name, email, subject, message }
+        });
+      }
+
+      await initDb();
+      const result = await sql`
+        INSERT INTO contact_submissions (name, email, subject, message)
+        VALUES (${name}, ${email}, ${subject || ""}, ${message})
+        RETURNING id, created_at;
+      `;
+
+      console.log("Contact submission saved to database (Local):", result.rows[0]);
+
+      return res.json({
+        success: true,
+        message: "Your message has been securely submitted and saved.",
+        submissionId: result.rows[0].id
+      });
+    } catch (error: any) {
+      console.error("Contact Form error:", error);
+      res.status(500).json({ error: error.message || "Failed to save contact submission." });
+    }
+  });
+
   // API Route for AI portfolio assistant
   app.post("/api/chat", async (req, res) => {
     try {
-      const { message, history } = req.body;
+      const { message, history, sessionId } = req.body;
       if (!message) {
         return res.status(400).json({ error: "Message is required." });
+      }
+
+      // Log user message to database
+      if (process.env.POSTGRES_URL) {
+        try {
+          await initDb();
+          await sql`
+            INSERT INTO chat_logs (session_id, sender, message_text)
+            VALUES (${sessionId || "unknown"}, 'user', ${message});
+          `;
+        } catch (dbErr) {
+          console.error("Failed to log user chat message to database:", dbErr);
+        }
       }
 
       if (!ai) {
@@ -90,6 +186,19 @@ async function startServer() {
         } else if (lower.includes("skill") || lower.includes("tech") || lower.includes("code")) {
           responseFallback = "Waqar's advanced technology stack includes Python, PyTorch, TensorFlow, OpenCV, FastAPI, React, Next.js, Node.js, and cloud containerizations like Docker. He specializes in deploying real-time deep learning models.";
         }
+
+        // Log fallback response to database
+        if (process.env.POSTGRES_URL) {
+          try {
+            await sql`
+              INSERT INTO chat_logs (session_id, sender, message_text)
+              VALUES (${sessionId || "unknown"}, 'bot', ${responseFallback});
+            `;
+          } catch (dbErr) {
+            console.error("Failed to log bot fallback reply to database:", dbErr);
+          }
+        }
+
         return res.json({ text: responseFallback });
       }
 
@@ -122,6 +231,19 @@ async function startServer() {
       });
 
       const reply = response.text || "I was unable to formulate a response. Please feel free to email Waqar directly at waqarhaidertufian@gmail.com!";
+
+      // Log bot reply to database
+      if (process.env.POSTGRES_URL) {
+        try {
+          await sql`
+            INSERT INTO chat_logs (session_id, sender, message_text)
+            VALUES (${sessionId || "unknown"}, 'bot', ${reply});
+          `;
+        } catch (dbErr) {
+          console.error("Failed to log bot reply to database:", dbErr);
+        }
+      }
+
       res.json({ text: reply });
 
     } catch (error: any) {

@@ -14,7 +14,7 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validation checks
@@ -26,12 +26,32 @@ export default function Contact() {
     setIsSubmitting(true);
     setSubmitFeedback(null);
 
-    // Simulate luxury API dispatch timing
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Server returned error state");
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        setSubmitFeedback("success");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setSubmitFeedback("error");
+      }
+    } catch (error) {
+      console.error("Failed to submit contact form:", error);
+      setSubmitFeedback("error");
+    } finally {
       setIsSubmitting(false);
-      setSubmitFeedback("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 1500);
+    }
   };
 
   return (

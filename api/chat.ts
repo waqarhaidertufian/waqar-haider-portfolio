@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { sql } from "@vercel/postgres";
 
 // Initialize server-side Gemini API
 const apiKey = process.env.GEMINI_API_KEY;
@@ -13,6 +14,27 @@ if (apiKey) {
       }
     }
   });
+}
+
+let dbInitialized = false;
+
+async function initDb() {
+  if (dbInitialized) return;
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS chat_logs (
+        id SERIAL PRIMARY KEY,
+        session_id VARCHAR(255),
+        sender VARCHAR(50) NOT NULL,
+        message_text TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `;
+    dbInitialized = true;
+  } catch (error) {
+    console.error("Failed to initialize chat_logs table:", error);
+    throw error;
+  }
 }
 
 const WAQAR_FACT_SHEET = `
@@ -49,7 +71,7 @@ Instructions for your responses:
 - Keep answers relatively concise, professional, and directly helpful.
 - Avoid repeating this full list of credentials unless asked. Just retrieve relevant answers naturally.
 - Highlight Waqar's email, whatsapp, and location beautifully when people ask how to contact or hire him.
-- If they ask general setup questions, feel free to give helpful technical guidance, but keep the core focus on Waqar.
+- If they ask general setup questions, feel free to give helpful technical guidance, but keep the focus on Waqar.
 - Adopt a premium, futuristic luxury tone, matching the portfolio's aesthetics.
 `;
 
@@ -68,9 +90,22 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { message, history } = req.body;
+    const { message, history, sessionId } = req.body;
     if (!message) {
       return res.status(400).json({ error: "Message is required." });
+    }
+
+    // Save user message to database if postgres connection exists
+    if (process.env.POSTGRES_URL) {
+      try {
+        await initDb();
+        await sql`
+          INSERT INTO chat_logs (session_id, sender, message_text)
+          VALUES (${sessionId || "unknown"}, 'user', ${message});
+        `;
+      } catch (dbErr) {
+        console.error("Failed to log user chat message to database:", dbErr);
+      }
     }
 
     if (!ai) {
@@ -88,6 +123,19 @@ export default async function handler(req: any, res: any) {
       } else if (lower.includes("skill") || lower.includes("tech") || lower.includes("code")) {
         responseFallback = "Waqar's advanced technology stack includes Python, PyTorch, TensorFlow, OpenCV, FastAPI, React, Next.js, Node.js, and cloud containerizations like Docker. He specializes in deploying real-time deep learning models.";
       }
+
+      // Save fallback response to database if postgres connection exists
+      if (process.env.POSTGRES_URL) {
+        try {
+          await sql`
+            INSERT INTO chat_logs (session_id, sender, message_text)
+            VALUES (${sessionId || "unknown"}, 'bot', ${responseFallback});
+          `;
+        } catch (dbErr) {
+          console.error("Failed to log bot fallback reply to database:", dbErr);
+        }
+      }
+
       return res.status(200).json({ text: responseFallback });
     }
 
@@ -117,6 +165,19 @@ export default async function handler(req: any, res: any) {
     });
 
     const reply = response.text || "I was unable to formulate a response. Please feel free to email Waqar directly at waqarhaidertufian@gmail.com!";
+
+    // Save bot reply to database if postgres connection exists
+    if (process.env.POSTGRES_URL) {
+      try {
+        await sql`
+          INSERT INTO chat_logs (session_id, sender, message_text)
+          VALUES (${sessionId || "unknown"}, 'bot', ${reply});
+        `;
+      } catch (dbErr) {
+        console.error("Failed to log bot reply to database:", dbErr);
+      }
+    }
+
     return res.status(200).json({ text: reply });
 
   } catch (error: any) {
