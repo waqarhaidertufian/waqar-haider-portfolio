@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Premium Luxury AI Theme Color Accents */
+  --color-cyan-glow: #06b6d4;
+  --color-purple-glow: #8b5cf6;
+  --color-emerald-glow: #10b981;
+  --color-dark-bg: #030014;
+  --color-dark-card: #090520;
+}
+
+/* Extra premium styling */
+@layer base {
+  body {
+    background-color: #030014;
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+  }
+
+  /* Custom high-end scrollbar for Apple/Vercel level polish */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #040118;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 9999px;
+    border: 2px solid #040118;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(6, 182, 212, 0.5);
+  }
+
+  /* Remove input focus outlines and add clean glow */
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+    border-color: rgba(6, 182, 212, 0.8) !important;
+  }
+}
+
+/* Glassmorphism utility classes */
+.glass-panel {
+  background: rgba(9, 5, 32, 0.5);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(9, 5, 32, 0.7);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.15);
+}
+
+.text-gradient-cyan-purple {
+  background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald-cyan {
+  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Luxury animations and glows */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.pulse-glowing-aurora {
+  animation: pulseGlow 12s infinite ease-in-out;
+}
+
+/* Custom interactive neural dot */
+.glowing-cyber-node {
+  box-shadow: 0 0 12px #06b6d4;
+}
+
+/* Light theme support override classes if toggled */
+/* Light theme support override classes if toggled */
+.light-mode {
+  background-color: #fafafa;
+  color: #1e293b;
+}
+
+/* Force light backgrounds on elements that have dark tailwind bg utility classes */
+.light-mode body,
+.light-mode .bg-\[\#030014\],
+.light-mode .bg-dark-bg,
+.light-mode main {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.light-mode .bg-\[\#040118\] {
+  background-color: #f1f5f9 !important;
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-mode header.bg-\[\#030014\]\/75 {
+  background-color: rgba(248, 250, 252, 0.8) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-mode .glass-panel,
+.light-mode .bg-\[\#090520\]\/25,
+.light-mode .bg-\[\#090520\]\/65 {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-mode .glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(6, 182, 212, 0.3) !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Text visibility adjustments */
+.light-mode .text-white {
+  color: #0f172a !important;
+}
+
+.light-mode .text-slate-100 {
+  color: #1e293b !important;
+}
+
+.light-mode .text-slate-200 {
+  color: #334155 !important;
+}
+
+.light-mode .text-slate-350,
+.light-mode .text-slate-300 {
+  color: #475569 !important;
+}
+
+.light-mode .text-slate-400 {
+  color: #64748b !important;
+}
+
+.light-mode .text-slate-500 {
+  color: #64748b !important;
+}
+
+.light-mode .border-white\/5,
+.light-mode .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Gradient Text preservation */
+.light-mode .text-gradient-cyan-purple,
+.light-mode .text-gradient-emerald-cyan,
+.light-mode .bg-clip-text {
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Timeline center line color override */
+.light-mode .border-l-2.border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Chat Assistant panel style overrides */
+.light-mode .bg-\[\#090520\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light-mode .bg-white\/\[0\.02\] {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+.light-mode .bg-white\/\[0\.01\] {
+  background-color: rgba(0, 0, 0, 0.01) !important;
+}
+
+.light-mode .text-slate-200.rounded-tl-none {
+  color: #0f172a !important;
+}
+
+/* Suggested chips */
+.light-mode .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: #475569 !important;
+}
+
+/* Inputs and interactive forms */
+.light-mode input,
+.light-mode textarea {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #0f172a !important;
+}
+
+.light-mode input::placeholder,
+.light-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Navigation items hover overrides */
+.light-mode nav.bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.light-mode nav a.text-slate-400 {
+  color: #475569 !important;
+}
+
+.light-mode nav a.text-slate-400:hover {
+  color: #0f172a !important;
+}
+
+.light-mode nav .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #94a3b8 20%, #ffffff 50%, #94a3b8 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.colorful-glow-border {
+  background: linear-gradient(90deg, #06b6d4, #ec4899, #8b5cf6, #06b6d4);
+  background-size: 300% 300%;
+  animation: borderRotate 6s ease infinite;
+}
