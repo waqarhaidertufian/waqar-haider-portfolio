@@ -267,50 +267,40 @@ export const TECHNOLOGIES_DATA: Technology[] = [
 export const TIMELINE_DATA: TimelineItem[] = [
   {
     id: "t1",
-    period: "2024 - Present",
-    role: "Senior AI & Full Stack Engineer",
-    company: "SaaS Tech Innovations",
+    period: "2025 - Present",
+    role: "AI & Machine Learning Engineer",
+    company: "Independent / Self-Employed",
     description: [
-      "Led architectural design for custom image sorting models, reducing human pipeline lag by over 80%.",
-      "Created highly interactive real-time computer vision streams deploying custom deep learning backends with WebSockets.",
-      "Mentored a junior multi-disciplinary squad across complex deployment nodes, integrating scalable React and FastAPI configurations."
+      "Developed cutting-edge AI models, boosting efficiency by 30%.",
+      "Implemented machine learning algorithms, enhancing predictive accuracy by 25%.",
+      "Optimized data pipelines, reducing processing time by 40%.",
+      "Achieved a 20% increase in customer satisfaction through personalized solutions."
     ],
-    tags: ["FastAPI", "PyTorch", "React", "Docker", "AWS"]
+    tags: ["Python", "Machine Learning", "Deep Learning", "Neural Networks", "Data Modeling"]
   },
   {
     id: "t2",
-    period: "2022 - 2024",
-    role: "AI Developer / ML Engineer",
-    company: "Apex Computer Dynamics",
+    period: "Jun 2025 - Sep 2025",
+    role: "Full Stack Engineer Intern",
+    company: "NETSOL Technologies",
     description: [
-      "Trained and productionized YOLO and OpenCV platforms for automatic face, mask, and biometric security systems.",
-      "Compiled micro-service containers using Docker, establishing cloud deployment workflows for high concurrency.",
-      "Integrated secure third-party search and NLP models onto dynamic company interfaces, handling 1M+ weekly inquiries."
+      "Developed full-stack web modules using React and FastAPI for finance platforms.",
+      "Built robust MLOps pipelines to preprocess and validate multi-source financial data.",
+      "Integrated Generative AI and LLM orchestration to automate complex workflows.",
+      "Maintained reusable code across microservices using Docker containerization."
     ],
-    tags: ["Python", "TensorFlow", "OpenCV", "GitHub", "MongoDB"]
-  },
-  {
-    id: "t3",
-    period: "2020 - 2022",
-    role: "Full Stack Software Engineer",
-    company: "Faisalabad Software Labs",
-    description: [
-      "Developed high-resolution commercial client dashboards with custom charting nodes, responsive bento grids, and offline actions.",
-      "Configured robust relational database systems, crafting query indices that cut fetch durations in half.",
-      "Aligned UI styles with modern design paradigms, achieving high Apple and Vercel-like user review metrics."
-    ],
-    tags: ["React", "Express.js", "SQL", "Tailwind CSS", "Git"]
+    tags: ["React", "FastAPI", "Docker", "Generative AI", "MLOps"]
   }
 ];
 
 export const EDUCATION_DATA: EducationItem[] = [
   {
     id: "e1",
-    degree: "BS Artificial Intelligence",
-    institution: "THE UNIVERSITY OF FAISALABAD",
+    degree: "BS in Artificial Intelligence",
+    institution: "The University Of Faisalabad",
     period: "2023 - Present",
     description: "Specialized in Artificial Intelligence, Deep Science, Advanced Algorithms, and Computer Vision. Concluded research thesis focused on Object Recognition and Autonomous Navigation Tracking.",
-    score: "CGPA 3.84 / 4.0"
+    score: "GPA: 3.8 / 4.0"
   },
   {
     id: "e2",

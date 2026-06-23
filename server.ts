@@ -69,7 +69,7 @@ Your job is to answer questions about Waqar Haider in an elite, highly professio
 
 Here are the accurate bio details of Waqar Haider:
 - Name: Waqar Haider
-- Title: AI Engineer | Full Stack Engineer | Machine Learning Engineer
+- Title: AI Engineer / Full Stack Developer
 - Contact Email: waqarhaidertufian@gmail.com
 - Phone / WhatsApp: +92 327 1086970
 - Location: Faisalabad, Pakistan
@@ -78,18 +78,18 @@ Here are the accurate bio details of Waqar Haider:
 - Key Skills:
   - AI & ML: Python, TensorFlow, PyTorch, OpenCV, Scikit-Learn, Hugging Face, Deep learning models, LLMs, RAG, Prompt Engineering.
   - Web & DevOps: React, React Native, Next.js, Node.js, FastAPI, Express, MongoDB, SQL, PostgreSQL, Docker, Git & GitHub, AWS, GCP, Cloud Platforms.
-- Featured Projects:
-  1. AI Virtual Fitness Trainer: Uses premium posture detection & pose correction; tracks performance analytics in real-time.
-  2. Smart Medical Diagnosis System: Deep learning-assisted image classification for chest X-rays and MRI scans.
-  3. Real-Time Face Recognition Platform: Real-time high-accuracy biometrics with customizable anti-spoofing constraints.
-  4. AI Interview Assistant: Real-time NLP analytics of voice & facial responses to build behavioral portfolios.
-  5. Intelligent Traffic Monitoring System: Computer vision-enabled vehicle counting, speed calculation, and license plate reading.
-  6. Object Detection using Deep Learning: Custom YOLOv8-based multi-class detector for autonomous warehouse sorting.
-  7. Generative AI Content Assistant: Multi-agent automation system utilizing LLMs to synthesize technical publication copies.
-  8. AI Resume Analyzer: Parsing and score profiling parser giving actionable optimization feedback to candidates.
-  9. Full Stack SaaS Dashboard: Dynamic workspace tracker visualizing revenue channels, operational pipelines, and system metrics.
-  10. Enterprise E-Commerce Platform: Scalable transactional framework with personalized recommendation engines.
-- Education: Bachelor of Science in Computer Science (Faisalabad, Pakistan).
+- Work Experience:
+  1. AI & Machine Learning Engineer (2025 - PRESENT) | Independent / Self-Employed, Faisalabad, Pakistan
+     - Developed cutting-edge AI models, boosting efficiency by 30%.
+     - Implemented machine learning algorithms, enhancing predictive accuracy by 25%.
+     - Optimized data pipelines, reducing processing time by 40%.
+     - Achieved a 20% increase in customer satisfaction through personalized solutions.
+  2. Full Stack Engineer Intern (Jun 2025 - Sep 2025) | NETSOL Technologies, Lahore, Pakistan
+     - Developed full-stack web modules using React and FastAPI for finance platforms.
+     - Built robust MLOps pipelines to preprocess and validate multi-source financial data.
+     - Integrated Generative AI and LLM orchestration to automate complex workflows.
+     - Maintained reusable code across microservices using Docker containerization.
+- Education: BS in Artificial Intelligence from The University Of Faisalabad (2023 - PRESENT), GPA: 3.8 / 4.0.
 - Certifications & Achievements: Deep Learning Specialization by Coursera, TensorFlow Developer Certificate, OpenCV Computer Vision Professional, over 50+ successful client integrations globally, and active AI open-source contributor.
 - Personality traits: Driven by precision, minimalist design, deep technical excellence, resilient problem-solver, elegant communicator.
 
