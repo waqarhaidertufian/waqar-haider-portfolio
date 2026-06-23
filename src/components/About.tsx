@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { BrainCircuit, Cpu, ShieldCheck, MapPin, ExternalLink, GraduationCap, Award } from "lucide-react";
-import waqarPortrait from "../../assets/waqar_portrait.jpg";
+import waqarPortrait from "../../assets/waqar_portrait.png";
 
 export default function About() {
   const coreExpertise = [
