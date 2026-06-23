@@ -8,10 +8,10 @@ interface LoadingScreenProps {
 
 const BOOT_LOGS = [
   "Inception... Establishing Waqar Haider's virtual workspace.",
-  "CUDA core allocation successful: GPU 0 [V100 SXM2 32GB] initialized.",
-  "Compiling model tensors: DenseNet-121 classification matrix load requested.",
-  "Booting posture estimation framework: MediaPipe spatial vectors online.",
-  "Indexing professional skills: Deep Learning, Computer Vision, Generative AI.",
+  "CUDA core allocation successful: GPU 0 [NVIDIA H100 Tensor Core 80GB] initialized.",
+  "Compiling model tensors: LLM and vision model matrices loaded.",
+  "Booting posture estimation framework: MediaPipe & custom tracking layers online.",
+  "Indexing professional skills: Deep Learning, Computer Vision, LLMs, Full Stack.",
   "Caching projects database... [AI Trainer, Diagnosis Node, Recog Platform].",
   "Resolving secure Gemini API tunnel via verified server credentials.",
   "System fully optimized: Welcome to Waqar Haider's luxury cyber environment."
@@ -81,8 +81,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <h2 className="font-display font-medium text-2xl md:text-3xl tracking-wider text-slate-100 text-center mb-1">
           WAQAR HAIDER
         </h2>
-        <p className="text-xs font-mono tracking-[0.3em] text-cyan-400/85 mb-8">
-          ENGINEERING INTELLIGENCE
+        <p className="text-xs font-mono tracking-[0.2em] text-cyan-400/85 mb-8">
+          AI ENGINEER / FULL STACK DEVELOPER
         </p>
 
         {/* Console Box */}
