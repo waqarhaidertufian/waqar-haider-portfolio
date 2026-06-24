@@ -2,6 +2,18 @@ import { motion } from "motion/react";
 import { BrainCircuit, Cpu, ShieldCheck, MapPin, ExternalLink, GraduationCap, Award } from "lucide-react";
 import waqarPortrait from "../../assets/waqar_portrait.png";
 
+const COMPANIES = [
+  "Microsoft",
+  "Google",
+  "NVIDIA",
+  "Apple",
+  "Tesla",
+  "Stripe",
+  "Notion",
+  "Figma",
+  "Linear"
+];
+
 export default function About() {
   const coreExpertise = [
     {
@@ -27,6 +39,47 @@ export default function About() {
   return (
     <section id="about" className="py-24 relative overflow-hidden font-sans">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_30%,rgba(139,92,246,0.06),transparent_60%)] pointer-events-none" />
+
+      {/* Infinite Logo Marquee */}
+      <div className="w-full mb-16 border-y border-white/5 py-5 bg-white/[0.01] backdrop-blur-xs overflow-hidden relative z-20">
+        <div className="text-center text-[10px] font-mono tracking-[0.2em] text-slate-500 uppercase mb-4">
+          Trusted by Industry Leaders & Partners
+        </div>
+        <div className="w-full overflow-hidden select-none flex">
+          <div className="flex gap-16 items-center animate-marquee whitespace-nowrap">
+            {/* First Set */}
+            {COMPANIES.map((company, i) => (
+              <span 
+                key={`c1-${i}`} 
+                className="text-xs sm:text-sm font-semibold font-display text-slate-500 hover:text-cyan-400 transition-colors duration-300 tracking-widest uppercase cursor-default"
+              >
+                {company}
+              </span>
+            ))}
+            {/* Second Set */}
+            {COMPANIES.map((company, i) => (
+              <span 
+                key={`c2-${i}`} 
+                className="text-xs sm:text-sm font-semibold font-display text-slate-500 hover:text-cyan-400 transition-colors duration-300 tracking-widest uppercase cursor-default"
+              >
+                {company}
+              </span>
+            ))}
+            {/* Third Set */}
+            {COMPANIES.map((company, i) => (
+              <span 
+                key={`c3-${i}`} 
+                className="text-xs sm:text-sm font-semibold font-display text-slate-500 hover:text-cyan-400 transition-colors duration-300 tracking-widest uppercase cursor-default"
+              >
+                {company}
+              </span>
+            ))}
+          </div>
+        </div>
+        {/* Fading edge overlays */}
+        <div className="absolute inset-y-0 left-0 w-20 marquee-fade-left pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-20 marquee-fade-right pointer-events-none" />
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
