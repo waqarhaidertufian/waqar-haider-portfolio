@@ -268,3 +268,96 @@
   background-size: 300% 300%;
   animation: borderRotate 6s ease infinite;
 }
+
+/* Morphing Liquid Blobs */
+@keyframes morphBlob1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1) rotate(120deg);
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+  }
+  66% {
+    transform: translate(-30px, 20px) scale(0.95) rotate(240deg);
+    border-radius: 28% 72% 37% 63% / 52% 48% 52% 48%;
+  }
+}
+
+@keyframes morphBlob2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+  }
+  33% {
+    transform: translate(-40px, 30px) scale(0.9) rotate(-120deg);
+    border-radius: 35% 65% 55% 45% / 50% 50% 45% 55%;
+  }
+  66% {
+    transform: translate(20px, -20px) scale(1.15) rotate(120deg);
+    border-radius: 50% 50% 30% 70% / 55% 45% 65% 35%;
+  }
+}
+
+.liquid-blob-1 {
+  animation: morphBlob1 18s infinite ease-in-out;
+}
+
+.liquid-blob-2 {
+  animation: morphBlob2 22s infinite ease-in-out;
+}
+
+/* Premium Liquid Crystal Glass */
+.glass-crystal-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.37),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.glass-reflection {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0) 100%);
+}
+
+.glass-crystal-input {
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-crystal-input:focus {
+  border-color: rgba(6, 182, 212, 0.5) !important;
+  box-shadow: 
+    0 0 15px rgba(6, 182, 212, 0.25),
+    inset 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Light mode overrides for Crystal Glass */
+.light-mode .glass-crystal-panel {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.07),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+.light-mode .glass-crystal-input {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #0f172a !important;
+}
+
+.light-mode .glass-crystal-input:focus {
+  border-color: rgba(6, 182, 212, 0.6) !important;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.15) !important;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { BrainCircuit, MessageSquare, X, Send, Cpu, Calendar, Code, Sparkles, MessageSquareCode } from "lucide-react";
+import { motion, AnimatePresence, useDragControls } from "motion/react";
+import { BrainCircuit, MessageSquare, X, Send, Cpu, Calendar, Code, Sparkles, MessageSquareCode, GripHorizontal } from "lucide-react";
 import { ChatMessage } from "../types";
 
 const SUGGESTIONS = [
@@ -11,6 +11,7 @@ const SUGGESTIONS = [
 ];
 
 export default function ChatWidget() {
+  const dragControls = useDragControls();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -111,7 +112,20 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[999] select-none font-sans flex flex-col items-end">
+    <motion.div
+      drag
+      dragListener={false}
+      dragControls={dragControls}
+      dragMomentum={false}
+      dragElastic={0.08}
+      dragConstraints={{
+        left: -window.innerWidth + (typeof window !== 'undefined' && window.innerWidth < 640 ? window.innerWidth * 0.9 : 380) + 24,
+        right: 24,
+        top: -window.innerHeight + 600,
+        bottom: 24
+      }}
+      className="fixed bottom-6 right-6 z-[999] select-none font-sans flex flex-col items-end touch-none"
+    >
       {/* 1. Conversations Sliding Drawer Panel */}
       <AnimatePresence>
         {isOpen && (
@@ -120,39 +134,64 @@ export default function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 35 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="w-[90vw] sm:w-[380px] h-[520px] bg-[#090520] border border-white/10 rounded-2xl flex flex-col justify-between overflow-hidden shadow-[0_20px_50px_rgba(3,0,20,0.85)] mb-4"
+            className="w-[90vw] sm:w-[380px] h-[520px] glass-crystal-panel rounded-2xl flex flex-col justify-between overflow-hidden mb-4 relative z-[999]"
           >
-            {/* Header coordinates */}
-            <div className="px-4 py-4 bg-white/[0.02] border-b border-white/5 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-cyan-950/40 border border-cyan-400/20 flex items-center justify-center font-bold text-cyan-400">
-                  <Cpu className="w-4 h-4 text-cyan-400 animate-spin-slow" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-sans font-bold text-slate-100 flex items-center gap-1.5 uppercase tracking-wide">
-                    WAQAR_CO-BOT v1.2
-                  </h4>
-                  <p className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-ping" />
-                    ONLINE
-                  </p>
-                </div>
+            {/* Animated Liquid Crystal Background Blobs */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 rounded-2xl">
+              {/* Blob 1 */}
+              <div className="absolute top-[-10%] left-[-10%] w-[65%] h-[65%] bg-gradient-to-br from-cyan-500/20 to-purple-500/10 rounded-full blur-[45px] liquid-blob-1" />
+              {/* Blob 2 */}
+              <div className="absolute bottom-[-10%] right-[-10%] w-[65%] h-[65%] bg-gradient-to-br from-purple-500/20 to-emerald-500/10 rounded-full blur-[45px] liquid-blob-2" />
+              {/* Crystal Diagonal reflection sheen */}
+              <div className="absolute inset-0 glass-reflection opacity-40 pointer-events-none" />
+            </div>
+
+            {/* Header coordinates (Draggable handle) */}
+            <div 
+              onPointerDown={(e) => {
+                const target = e.target as HTMLElement;
+                if (!target.closest('button')) {
+                  dragControls.start(e);
+                }
+              }}
+              className="px-4 py-3 bg-white/[0.01] border-b border-white/5 flex flex-col cursor-grab active:cursor-grabbing select-none z-10"
+            >
+              {/* Drag Handle Indicator Pill */}
+              <div className="w-12 h-1 bg-white/10 rounded-full mx-auto mb-2 shrink-0 opacity-40 hover:opacity-100 hover:bg-cyan-400/40 transition-all duration-200 flex items-center justify-center">
+                <GripHorizontal className="w-3 h-3 text-white/40" />
               </div>
 
-              {/* Close Drawer trigger */}
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-full border border-white/5 text-slate-400 hover:text-white hover:bg-white/5 duration-150 cursor-pointer"
-                aria-label="Minimize Chat Module"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-cyan-950/40 border border-cyan-400/20 flex items-center justify-center font-bold text-cyan-400">
+                    <Cpu className="w-4 h-4 text-cyan-400 animate-spin-slow" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-sans font-bold text-slate-100 flex items-center gap-1.5 uppercase tracking-wide">
+                      WAQAR_CO-BOT v1.2
+                    </h4>
+                    <p className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-ping" />
+                      ONLINE
+                    </p>
+                  </div>
+                </div>
+
+                {/* Close Drawer trigger */}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-full border border-white/5 text-slate-400 hover:text-white hover:bg-white/5 duration-150 cursor-pointer"
+                  aria-label="Minimize Chat Module"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Chat Body Scroll Container */}
             <div
               ref={chatScrollRef}
-              className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin select-text"
+              className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin select-text z-10 relative"
             >
               {messages.map((m) => {
                 const isBot = m.sender === "bot";
@@ -167,8 +206,8 @@ export default function ChatWidget() {
                     <div
                       className={`w-6 h-6 rounded-full border text-[10px] uppercase font-bold flex items-center justify-center shrink-0 select-none ${
                         isBot
-                          ? "bg-purple-950/30 border-purple-400/25 text-purple-400"
-                          : "bg-cyan-950/30 border-cyan-400/25 text-cyan-400"
+                          ? "bg-purple-950/40 border-purple-400/30 text-purple-400 shadow-[0_2px_8px_rgba(139,92,246,0.15)]"
+                          : "bg-cyan-950/40 border-cyan-400/30 text-cyan-400 shadow-[0_2px_8px_rgba(6,182,212,0.15)]"
                       }`}
                     >
                       {isBot ? "W" : "U"}
@@ -176,10 +215,10 @@ export default function ChatWidget() {
 
                     <div className="flex flex-col">
                       <div
-                        className={`p-3 text-[12px] rounded-xl leading-relaxed ${
+                        className={`p-3 text-[12px] rounded-xl leading-relaxed backdrop-blur-md border border-white/10 ${
                           isBot
-                            ? "bg-white/[0.02] border border-white/5 text-slate-200 rounded-tl-none"
-                            : "bg-cyan-600 font-sans font-medium text-slate-950 rounded-tr-none shadow-[0_4px_12px_rgba(6,182,212,0.2)]"
+                            ? "bg-white/[0.03] text-slate-200 rounded-tl-none shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                            : "bg-gradient-to-r from-cyan-500/80 to-purple-600/80 font-sans font-medium text-white rounded-tr-none shadow-[0_6px_15px_rgba(6,182,212,0.2)]"
                         }`}
                       >
                         {m.text}
@@ -195,10 +234,10 @@ export default function ChatWidget() {
               {/* Bot typing simulation ball */}
               {isTyping && (
                 <div className="flex items-center gap-2.5 max-w-[60%] mr-auto">
-                  <div className="w-6 h-6 rounded-full bg-purple-950/15 border border-purple-500/10 flex items-center justify-center font-bold text-[9px] text-purple-400">
+                  <div className="w-6 h-6 rounded-full bg-purple-950/30 border border-purple-500/20 flex items-center justify-center font-bold text-[9px] text-purple-400">
                     W
                   </div>
-                  <div className="p-3 bg-white/[0.01] border border-white/5 rounded-xl rounded-tl-none flex items-center gap-1">
+                  <div className="p-3 bg-white/[0.02] border border-white/10 rounded-xl rounded-tl-none flex items-center gap-1 backdrop-blur-sm">
                     <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-bounce delay-100" />
                     <span className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-bounce delay-200" />
                     <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-bounce delay-300" />
@@ -209,12 +248,12 @@ export default function ChatWidget() {
 
             {/* Quick chips suggested links */}
             {messages.length < 3 && (
-              <div className="px-4 py-2 flex flex-wrap gap-1.5 border-t border-white/5 bg-black/10 select-none">
+              <div className="px-4 py-2 flex flex-wrap gap-1.5 border-t border-white/5 bg-black/20 select-none z-10">
                 {SUGGESTIONS.map((item) => (
                   <button
                     key={item}
                     onClick={() => handleSendMessage(item)}
-                    className="text-[9px] font-mono tracking-wide text-slate-400 hover:text-cyan-400 bg-white/5 border border-white/5 px-2.5 py-1 rounded-full text-left duration-200 select-none cursor-pointer"
+                    className="text-[9px] font-mono tracking-wide text-slate-300 hover:text-cyan-300 bg-white/[0.03] border border-white/10 hover:border-cyan-500/30 hover:bg-cyan-500/10 px-2.5 py-1 rounded-full text-left duration-250 select-none cursor-pointer backdrop-blur-sm transition-all"
                   >
                     {item}
                   </button>
@@ -225,20 +264,20 @@ export default function ChatWidget() {
             {/* Form messaging input text-area controller */}
             <form
               onSubmit={handleFormSubmit}
-              className="px-4 py-3 border-t border-white/5 bg-white/[0.01] flex items-center gap-2"
+              className="px-4 py-3 border-t border-white/5 bg-black/20 flex items-center gap-2 z-10"
             >
               <input
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Ask model about Waqar..."
-                className="flex-1 px-3 py-2 rounded-lg bg-black/40 border border-white/5 text-slate-200 text-xs focus:ring-1 focus:ring-cyan-400 transition"
+                className="flex-1 px-3 py-2 rounded-xl glass-crystal-input text-slate-200 text-xs transition"
                 aria-label="Type message query"
               />
               <button
                 type="submit"
                 disabled={!inputMessage.trim() || isTyping}
-                className="p-2 rounded-lg bg-cyan-400 text-slate-900 hover:scale-105 duration-150 disabled:opacity-30 disabled:scale-100 cursor-pointer"
+                className="p-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-purple-500 hover:brightness-110 text-slate-950 font-bold hover:scale-105 active:scale-95 duration-150 disabled:opacity-30 disabled:scale-100 cursor-pointer shadow-[0_4px_12px_rgba(6,182,212,0.25)] flex items-center justify-center shrink-0"
                 aria-label="Send message query"
               >
                 <Send className="w-3.5 h-3.5" />
@@ -249,14 +288,18 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       {/* 2. Floating robotic core toggle circle trigger & Label */}
-      <div className="flex flex-col items-center gap-1.5 mt-2">
+      <div className="flex flex-col items-center gap-1.5 mt-2 z-[999]">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
+          onPointerDown={(e) => !isOpen && dragControls.start(e)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-emerald-400 flex items-center justify-center text-slate-950 font-bold shadow-[0_8px_30px_rgba(6,182,212,0.35)] cursor-pointer outline-none relative hover:brightness-110"
+          className="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500/80 via-purple-600/80 to-cyan-400/80 flex items-center justify-center text-white border border-white/20 backdrop-blur-md shadow-[0_10px_35px_rgba(6,182,212,0.4),_inset_0_2px_4px_rgba(255,255,255,0.4)] cursor-pointer outline-none relative hover:brightness-110 duration-300 overflow-hidden active:cursor-grabbing"
           aria-label="Toggle AI Virtual Assistant"
         >
+          {/* Animated Sheen Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+          
           <AnimatePresence mode="wait">
             {isOpen ? (
               <motion.div
@@ -266,7 +309,7 @@ export default function ChatWidget() {
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <X className="w-6 h-6 text-slate-950" />
+                <X className="w-6 h-6 text-white" />
               </motion.div>
             ) : (
               <motion.div
@@ -284,7 +327,7 @@ export default function ChatWidget() {
                   strokeWidth="1.5" 
                   strokeLinecap="round" 
                   strokeLinejoin="round" 
-                  className="w-6 h-6 text-slate-950 animate-pulse"
+                  className="w-6 h-6 text-white animate-pulse"
                 >
                   {/* Outer W */}
                   <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" />
@@ -309,10 +352,10 @@ export default function ChatWidget() {
             )}
           </AnimatePresence>
         </motion.button>
-        <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase select-none">
+        <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase select-none cursor-grab active:cursor-grabbing" onPointerDown={(e) => !isOpen && dragControls.start(e)}>
           AI Chatbot
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 }
