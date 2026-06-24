@@ -86,18 +86,21 @@ export default function Contact() {
                 {/* Info links list */}
                 <div className="space-y-6">
                   {/* Location Coordinate */}
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg border border-cyan-400/20 bg-cyan-950/25 text-cyan-400 shrink-0">
-                      <MapPin className="w-5 h-5 animate-pulse" />
+                  <div
+                    onClick={() => setIsMapModalOpen(true)}
+                    className="flex items-start gap-4 cursor-pointer group"
+                  >
+                    <div className="p-3 rounded-lg border border-cyan-400/20 bg-cyan-950/25 text-cyan-400 shrink-0 luxury-glow-cyan group-hover:scale-105 transition-transform duration-300">
+                      <MapPin className="w-5 h-5 animate-pulse group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
                       <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
-                        PHYSICAL HQ
+                        PHYSICAL HQ (Click to view map)
                       </span>
-                      <span className="text-sm font-sans font-bold text-slate-200 mt-0.5 block">
+                      <span className="text-sm font-sans font-bold text-slate-200 mt-0.5 block group-hover:text-cyan-400 transition-colors">
                         Faisalabad, Pakistan
                       </span>
-                      <span className="text-xs font-mono text-slate-400 mt-0.5 block">
+                      <span className="text-xs font-mono text-slate-400 mt-0.5 block group-hover:text-slate-350 transition-colors">
                         Open for fully remote global engineering positions.
                       </span>
                     </div>
@@ -108,8 +111,8 @@ export default function Contact() {
                     href="mailto:waqarhaidertufian@gmail.com"
                     className="flex items-start gap-4 group"
                   >
-                    <div className="p-3 rounded-lg border border-purple-400/20 bg-purple-950/25 text-purple-400 shrink-0 group-hover:border-purple-400/50 transition-colors">
-                      <Mail className="w-5 h-5" />
+                    <div className="p-3 rounded-lg border border-purple-400/20 bg-purple-950/25 text-purple-400 shrink-0 luxury-glow-purple group-hover:scale-105 transition-transform duration-300">
+                      <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
                       <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
@@ -118,7 +121,7 @@ export default function Contact() {
                       <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block">
                         waqarhaidertufian@gmail.com
                       </span>
-                      <span className="text-xs font-mono text-slate-400 mt-0.5 block">
+                      <span className="text-xs font-mono text-slate-400 mt-0.5 block group-hover:text-slate-350 transition-colors">
                         Standard response SLA: Under 4 hours.
                       </span>
                     </div>
@@ -132,8 +135,8 @@ export default function Contact() {
                     referrerPolicy="no-referrer"
                     className="flex items-start gap-4 group"
                   >
-                    <div className="p-3 rounded-lg border border-emerald-400/20 bg-emerald-950/25 text-emerald-400 shrink-0 group-hover:border-emerald-400/50 transition-colors">
-                      <MessageCircle className="w-5 h-5 text-emerald-400" />
+                    <div className="p-3 rounded-lg border border-emerald-400/20 bg-emerald-950/25 text-emerald-400 shrink-0 luxury-glow-emerald group-hover:scale-105 transition-transform duration-300">
+                      <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
                     </div>
                     <div>
                       <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
@@ -142,7 +145,7 @@ export default function Contact() {
                       <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-emerald-400 transition-colors mt-0.5 block">
                         +92 327 1086970
                       </span>
-                      <span className="text-xs font-mono text-slate-400 mt-0.5 block font-bold text-emerald-450 flex items-center gap-1.5">
+                      <span className="text-xs font-mono text-slate-400 mt-0.5 block font-bold text-emerald-450 flex items-center gap-1.5 group-hover:text-slate-350 transition-colors">
                         <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-ping" />
                         INSTANT CONNECT ACTIVE
                       </span>
