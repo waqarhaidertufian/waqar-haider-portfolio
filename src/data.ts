@@ -313,9 +313,9 @@ export const EDUCATION_DATA: EducationItem[] = [
 
 export const ACHIEVEMENTS_DATA: Achievement[] = [
   { id: "a1", metric: "Projects Success", value: 50, suffix: "+", label: "Global Clients Handled" },
-  { id: "a2", metric: "Model F1 Rate", value: 99, suffix: "%", label: "Keypoint Posture Recall Scale" },
-  { id: "a3", metric: "Weekly Telemetry", value: 1, suffix: "M+", label: "Operational API Requests Passed" },
-  { id: "a4", metric: "Performance Speed", value: 120, suffix: " FPS", label: "Live OpenCV Camera Tracking" }
+  { id: "a2", metric: "AI Models", value: 12, suffix: "+", label: "AI Models Built" },
+  { id: "a3", metric: "Completed Projects", value: 18, suffix: "+", label: "Projects Completed" },
+  { id: "a4", metric: "Solutions", value: 100, suffix: "%", label: "Client Ready Solutions" }
 ];
 
 export const CERTIFICATIONS_DATA: Certification[] = [
