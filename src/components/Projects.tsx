@@ -52,14 +52,14 @@ function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProp
     mouseY.set(0);
   };
 
-  // Variants for initial entry + auto-float 3D wobble
+  // Variants for initial entry using luxury Bezier curves
   const cardVariants = {
     hidden: { 
       opacity: 0, 
-      y: 60,
-      scale: 0.92,
-      rotateX: 12,
-      rotateY: -8,
+      y: 50,
+      scale: 0.96,
+      rotateX: 4,
+      rotateY: -3,
     },
     visible: (customDelay: number) => ({
       opacity: 1,
@@ -68,29 +68,17 @@ function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProp
       rotateX: 0,
       rotateY: 0,
       transition: {
-        type: "spring",
-        stiffness: 60,
-        damping: 14,
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1], // Apple luxury easeOutExpo curve
         delay: customDelay,
       }
     }),
-    float: {
-      rotateX: [-3, 3, -3],
-      rotateY: [-3.5, 3.5, -3.5],
-      y: [-6, 6, -6],
-      transition: {
-        duration: 7,
-        repeat: Infinity,
-        repeatType: "mirror" as const,
-        ease: "easeInOut",
-      }
-    },
     hover: {
-      scale: 1.025,
-      y: -12,
+      scale: 1.015,
+      y: -8,
       transition: {
-        duration: 0.3,
-        ease: "easeOut"
+        duration: 0.4,
+        ease: [0.16, 1, 0.3, 1]
       }
     }
   };
@@ -99,12 +87,12 @@ function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProp
     <motion.div
       ref={cardRef}
       layout
-      custom={index * 0.18} // staggered delay for auto-float
+      custom={index * 0.18} // staggered delay
       variants={cardVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
-      animate={isHovered ? "hover" : entranceDone ? "float" : "visible"}
+      animate={isHovered ? "hover" : "visible"}
       onAnimationComplete={(definition) => {
         if (definition === "visible") {
           setEntranceDone(true);
@@ -121,16 +109,39 @@ function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProp
         perspective: 1000,
       }}
     >
-      {/* 3D Sheen reflection sweep */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-        style={{
-          background: "radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6,182,212,0.12), transparent 80%)",
+      {/* 3D Interactive Mouse Sheen (Desktop Only) */}
+      {isHovered && (
+        <div 
+          className="absolute inset-0 pointer-events-none z-10"
+          style={{
+            background: "radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6,182,212,0.12), transparent 80%)",
+          }}
+        />
+      )}
+
+      {/* One-time Luxury Light Sweep (Runs on viewport entry for mobile & desktop) */}
+      <motion.div
+        className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-cyan-400/8 to-transparent -skew-x-20 pointer-events-none z-10"
+        initial={{ x: "-100%" }}
+        animate={entranceDone ? { x: "100%" } : { x: "-100%" }}
+        transition={{
+          duration: 1.6,
+          ease: [0.16, 1, 0.3, 1],
+          delay: index * 0.18 + 0.4
         }}
       />
 
-      {/* Glowing hover light */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Glowing top border reveal */}
+      <motion.div 
+        className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none z-10"
+        initial={{ scaleX: 0, opacity: 0 }}
+        animate={entranceDone ? { scaleX: [0, 1, 0.8], opacity: [0, 1, 0.3] } : { scaleX: 0, opacity: 0 }}
+        transition={{
+          duration: 1.8,
+          ease: [0.16, 1, 0.3, 1],
+          delay: index * 0.18 + 0.2
+        }}
+      />
 
       {/* 1. Dynamic Graphic Preview Mockup (Stripe/Apple Level Polish) */}
       <div 
