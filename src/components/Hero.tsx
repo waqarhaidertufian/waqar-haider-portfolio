@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
-import { ArrowDown, Cpu, Sparkles, FolderCode, Mail, FileText, AlertCircle } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowDown, Cpu, Sparkles, FolderCode, Mail, FileText, AlertCircle, Eye, Download, X } from "lucide-react";
 import { ACHIEVEMENTS_DATA } from "../data";
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [countsByMetric, setCountsByMetric] = useState<Record<string, number>>({});
+  const [showCVModal, setShowCVModal] = useState(false);
 
   // 1. Interactive 3D/2D Proximity Neural Network Canvas Physics
   useEffect(() => {
@@ -284,17 +285,15 @@ export default function Hero() {
           </a>
 
           {/* Action Resume Download */}
-          <a
-            href="/cv.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto relative group px-8 py-4 rounded-xl font-bold font-sans text-xs tracking-wider uppercase text-slate-300 bg-[#090520]/80 border border-white/5 backdrop-blur-md overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400/30 text-center flex items-center justify-center"
+          <button
+            onClick={() => setShowCVModal(true)}
+            className="w-full sm:w-auto relative group px-8 py-4 rounded-xl font-bold font-sans text-xs tracking-wider uppercase text-slate-300 bg-[#090520]/80 border border-white/5 backdrop-blur-md overflow-hidden transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400/30 text-center flex items-center justify-center cursor-pointer"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               <FileText className="w-4 h-4 text-cyan-400" />
               Get CV / Resume
             </span>
-          </a>
+          </button>
 
           {/* Action Direct Contact */}
           <a
@@ -342,6 +341,79 @@ export default function Hero() {
           <ArrowDown className="w-4 h-4" />
         </button>
       </div>
+
+      {/* Premium CV / Resume Selection Modal */}
+      <AnimatePresence>
+        {showCVModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowCVModal(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-sm w-full rounded-2xl border border-white/10 bg-[#090520]/95 p-6 shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden"
+            >
+              {/* Subtle tech background grids */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:16px_16px] opacity-20 pointer-events-none" />
+              <div className="absolute -top-12 -left-12 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl pointer-events-none" />
+
+              {/* Close Button */}
+              <button
+                onClick={() => setShowCVModal(false)}
+                className="absolute top-4 right-4 p-1.5 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 hover:text-white text-slate-400 transition cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="relative z-10 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4">
+                  <FileText className="w-6 h-6 text-cyan-400" />
+                </div>
+
+                <h3 className="font-display font-extrabold text-xl text-white mb-2">
+                  Get CV / Resume
+                </h3>
+                <p className="text-slate-400 text-sm mb-6">
+                  Select how you would like to open or save the CV on your device.
+                </p>
+
+                <div className="flex flex-col gap-3 w-full">
+                  {/* View Online Option */}
+                  <a
+                    href="/cv.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShowCVModal(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-xs tracking-wider uppercase text-white bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition duration-300 cursor-pointer"
+                  >
+                    <Eye className="w-4 h-4 text-cyan-400" />
+                    View Online
+                  </a>
+
+                  {/* Download Option */}
+                  <a
+                    href="/cv.pdf"
+                    download="Waqar_Haider_CV.pdf"
+                    onClick={() => setShowCVModal(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-xs tracking-wider uppercase text-slate-900 bg-white hover:scale-[1.02] transition duration-300 shadow-[0_10px_20px_rgba(255,255,255,0.05)] cursor-pointer"
+                  >
+                    <Download className="w-4 h-4 text-slate-900" />
+                    Download PDF
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
