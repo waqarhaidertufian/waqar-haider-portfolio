@@ -75,41 +75,48 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
           <a
             href="#home"
             onClick={(e) => handleClickNav(e, "#home")}
-            className="flex items-center gap-2 group cursor-pointer"
+            className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400/20 to-purple-500/20 border border-cyan-400/20 flex items-center justify-center group-hover:border-cyan-400/50 transition-colors">
+            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 border border-white/[0.08] flex items-center justify-center transition-all duration-500 group-hover:border-cyan-500/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] overflow-hidden">
+              <span className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-purple-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <svg 
                 viewBox="0 0 24 24" 
                 fill="none" 
-                stroke="currentColor" 
                 strokeWidth="1.2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
-                className="w-5.5 h-5.5 text-cyan-400 group-hover:scale-105 transition-transform"
+                className="relative z-10 w-5.5 h-5.5 group-hover:scale-110 transition-transform duration-300"
               >
+                <defs>
+                  <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#06b6d4" />
+                    <stop offset="50%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#10b981" />
+                  </linearGradient>
+                </defs>
                 {/* Outer W */}
-                <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" />
+                <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#logoGrad)" />
                 {/* Inner Parallel W */}
-                <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" />
+                <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" stroke="url(#logoGrad)" />
                 {/* Top left serif */}
-                <path d="M 1.5 6 H 4.5" />
+                <path d="M 1.5 6 H 4.5" stroke="url(#logoGrad)" />
                 {/* Top right serif */}
-                <path d="M 17.8 6 H 20.8" />
+                <path d="M 17.8 6 H 20.8" stroke="url(#logoGrad)" />
                 {/* Middle peak serif */}
-                <path d="M 10.2 9 H 12.2" />
+                <path d="M 10.2 9 H 12.2" stroke="url(#logoGrad)" />
                 {/* Bottom left serif */}
-                <path d="M 6 18 H 9" />
+                <path d="M 6 18 H 9" stroke="url(#logoGrad)" />
                 {/* Bottom right serif */}
-                <path d="M 13.3 18 H 16.3" />
+                <path d="M 13.3 18 H 16.3" stroke="url(#logoGrad)" />
                 {/* Brand dot */}
-                <circle cx="21.2" cy="17.2" r="1.1" fill="currentColor" stroke="none" />
+                <circle cx="21.2" cy="17.2" r="1.1" fill="#06b6d4" stroke="none" />
               </svg>
             </div>
-            <div>
-              <span className="font-display font-bold text-base md:text-lg tracking-wide bg-gradient-to-r from-white via-slate-200 to-cyan-300 bg-clip-text text-transparent">
+            <div className="flex flex-col">
+              <span className="font-display font-medium text-base md:text-lg tracking-[0.03em] bg-gradient-to-r from-white via-slate-100 to-slate-350 bg-clip-text text-transparent group-hover:from-white group-hover:via-cyan-100 group-hover:to-cyan-300 transition-all duration-300">
                 Waqar Haider
               </span>
-              <span className="block text-[9px] font-mono tracking-[0.2em] text-cyan-400/80 uppercase">
+              <span className="block text-[8px] font-mono tracking-[0.24em] text-cyan-400/90 uppercase transition-all duration-300 group-hover:text-cyan-300 group-hover:tracking-[0.27em]">
                 AI / Full Stack Engineer
               </span>
             </div>
