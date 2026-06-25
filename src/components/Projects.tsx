@@ -1,10 +1,254 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "motion/react";
 import { PROJECTS_DATA } from "../data";
 import { Project } from "../types";
-import { Github, ExternalLink, Award, FileText, ArrowUpRight, CheckCircle2, ChevronRight, X, BrainCircuit, Activity, Heart, ShieldAlert, Cpu } from "lucide-react";
+import { Github, ExternalLink, FileText, ArrowUpRight, CheckCircle2, ChevronRight, X, BrainCircuit, Activity, Heart, ShieldAlert, Cpu } from "lucide-react";
 
 const PROJECT_CATEGORIES = ["All Systems", "Deep Learning", "Computer Vision", "Generative AI", "Full Stack"];
+
+interface ProjectCardProps {
+  key?: string | number;
+  p: Project;
+  index: number;
+  GraphicIcon: any;
+  onOpenCaseStudy: (project: Project) => void;
+}
+
+function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProps) {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Motion values for interactive 3D mouse tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Map mouse relative coordinates [-0.5, 0.5] to tilt rotation degrees
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const xVal = (e.clientX - rect.left) / rect.width - 0.5;
+    const yVal = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(xVal);
+    mouseY.set(yVal);
+
+    // Update CSS variables for local mouse positions (sheen overlay)
+    const localX = e.clientX - rect.left;
+    const localY = e.clientY - rect.top;
+    cardRef.current.style.setProperty("--mouse-x", `${localX}px`);
+    cardRef.current.style.setProperty("--mouse-y", `${localY}px`);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  // Variants for auto-float 3D wobble (runs on mobile & desktop when not hovered)
+  const cardVariants = {
+    float: (customDelay: number) => ({
+      rotateX: [-3, 3, -3],
+      rotateY: [-3.5, 3.5, -3.5],
+      y: [-6, 6, -6],
+      transition: {
+        duration: 6.5,
+        repeat: Infinity,
+        repeatType: "mirror" as const,
+        ease: "easeInOut",
+        delay: customDelay,
+      }
+    }),
+    hover: {
+      y: -10,
+      scale: 1.015,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      layout
+      custom={index * 0.18} // staggered delay for auto-float
+      variants={cardVariants}
+      animate={isHovered ? "hover" : "float"}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="group relative flex flex-col justify-between rounded-2xl border border-white/5 bg-[#090520]/45 shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden hover:border-cyan-400/30 transition-colors duration-300"
+      style={{
+        rotateX: isHovered ? rotateX : undefined,
+        rotateY: isHovered ? rotateY : undefined,
+        transformStyle: "preserve-3d",
+        perspective: 1000,
+      }}
+    >
+      {/* 3D Sheen reflection sweep */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+        style={{
+          background: "radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(6,182,212,0.12), transparent 80%)",
+        }}
+      />
+
+      {/* Glowing hover light */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      {/* 1. Dynamic Graphic Preview Mockup (Stripe/Apple Level Polish) */}
+      <div 
+        className={`relative h-48 w-full bg-gradient-to-tr ${p.imagePlaceholderColor} overflow-hidden border-b border-white/5 flex items-center justify-center`}
+        style={{ transform: "translateZ(25px)", transformStyle: "preserve-3d" }}
+      >
+        {p.imageUrl ? (
+          <img
+            src={p.imageUrl}
+            alt={p.title}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-85"
+            style={{ transform: "translateZ(10px)" }}
+          />
+        ) : (
+          <>
+            {/* Floating background blobs */}
+            <div className="absolute top-5 left-10 w-24 h-24 rounded-full bg-cyan-400/10 blur-xl group-hover:bg-cyan-400/20 transition-colors" />
+            <div className="absolute bottom-5 right-10 w-28 h-28 rounded-full bg-purple-500/10 blur-2xl group-hover:bg-purple-500/20 transition-colors" />
+          </>
+        )}
+
+        {/* Visual schematic grids overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
+        
+        {/* Highly stylized custom coordinate lines and labels mimicking canvas scanners */}
+        <div className="absolute inset-x-4 top-4 flex items-center justify-between font-mono text-[9px] text-slate-400 tracking-wider z-10 uppercase">
+          <span>SCAN_SEQUENCE // NO.{p.id}</span>
+          <span>FPS: 120_CAPACITY</span>
+        </div>
+
+        {!p.imageUrl && (
+          <div className="relative z-10 flex flex-col items-center gap-2" style={{ transform: "translateZ(15px)" }}>
+            <div className="w-14 h-14 rounded-full bg-slate-900/80 border border-white/10 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform duration-500">
+              <GraphicIcon className="w-6 h-6 animate-pulse" />
+            </div>
+            <span className="text-[10px] font-mono tracking-widest text-slate-400 font-semibold">
+              {p.category.toUpperCase()} SYSTEM
+            </span>
+          </div>
+        )}
+
+        {p.imageUrl && (
+          <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2" style={{ transform: "translateZ(15px)" }}>
+            <div className="w-6 h-6 rounded-full bg-slate-950/80 border border-white/10 flex items-center justify-center text-cyan-400">
+              <GraphicIcon className="w-3.5 h-3.5" />
+            </div>
+            <span className="text-[9px] font-mono tracking-widest text-slate-200 uppercase">
+              {p.category} SYSTEM
+            </span>
+          </div>
+        )}
+
+        {/* Holographic targeting square corners */}
+        <div className="absolute top-8 left-8 w-4 h-4 border-t border-l border-white/20 z-10" />
+        <div className="absolute top-8 right-8 w-4 h-4 border-t border-r border-white/20 z-10" />
+        <div className="absolute bottom-8 left-8 w-4 h-4 border-b border-l border-white/20 z-10" />
+        <div className="absolute bottom-8 right-8 w-4 h-4 border-b border-r border-white/20 z-10" />
+      </div>
+
+      {/* 2. Structured Card Content & Title */}
+      <div className="p-6 flex-1 flex flex-col justify-between" style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d" }}>
+        <div>
+          {/* Category Label */}
+          <span className="text-[10px] font-mono font-medium tracking-[0.2em] text-cyan-400 uppercase">
+            {p.category}
+          </span>
+          
+          {/* Name */}
+          <h3 className="font-display font-medium text-lg text-white group-hover:text-cyan-300 transition-colors mt-2 mb-3">
+            {p.title}
+          </h3>
+          
+          {/* Overview */}
+          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
+            {p.description}
+          </p>
+
+          {/* Dynamic Metrics Badges */}
+          <div className="grid grid-cols-3 gap-2.5 px-3 py-3 rounded-xl bg-white/[0.01] border border-white/5 mb-6" style={{ transform: "translateZ(10px)" }}>
+            {p.metrics.map((m, idx) => (
+              <div key={idx} className="flex flex-col">
+                <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider">
+                  {m.label}
+                </span>
+                <span className="text-xs sm:text-sm font-display font-bold text-slate-200 mt-1">
+                  {m.value}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Tech Badges */}
+          <div className="flex flex-wrap gap-1.5 mb-6" style={{ transform: "translateZ(5px)" }}>
+            {p.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 rounded-md text-[10px] font-mono tracking-wide text-slate-400 bg-white/5 border border-white/5"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* 3. Action Buttons Row (Interactive Dialog/Github/Live) */}
+        <div className="flex items-center gap-3 border-t border-white/5 pt-4" style={{ transform: "translateZ(10px)" }}>
+          {/* Case Study dialog button */}
+          <button
+            onClick={() => onOpenCaseStudy(p)}
+            className="flex-1 px-4 py-2.5 rounded-lg text-[10px] font-bold font-sans tracking-wider uppercase text-cyan-400 bg-cyan-950/20 border border-cyan-400/10 hover:bg-cyan-950/40 group-hover:border-cyan-400/30 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            Case Study
+          </button>
+
+          {/* Source Link */}
+          <a
+            href={p.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            referrerPolicy="no-referrer"
+            className="p-2.5 rounded-lg border border-white/5 text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/10 transition-colors cursor-pointer"
+            aria-label="View Source Code Repository"
+          >
+            <Github className="w-4 h-4" />
+          </a>
+
+          {/* Live Demo Trigger */}
+          <a
+            href={p.liveUrl || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            referrerPolicy="no-referrer"
+            className="p-2.5 rounded-lg border border-white/5 text-slate-400 hover:text-cyan-400 hover:bg-white/5 hover:border-cyan-400/20 transition-colors cursor-pointer"
+            aria-label="View Live Interactive Demo Website"
+          >
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState("All Systems");
@@ -85,157 +329,16 @@ export default function Projects() {
           className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((p) => {
+            {filteredProjects.map((p, index) => {
               const GraphicIcon = getProjectHeroIcon(p.id);
               return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.5 }}
+                <ProjectCard
                   key={p.id}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-white/5 bg-[#090520]/45 shadow-[0_20px_40px_rgba(0,0,0,0.5)] overflow-hidden hover:border-cyan-400/20 transition-all duration-300"
-                >
-                  {/* Glowing hover light */}
-                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  {/* 1. Dynamic Graphic Preview Mockup (Stripe/Apple Level Polish) */}
-                  <div className={`relative h-48 w-full bg-gradient-to-tr ${p.imagePlaceholderColor} overflow-hidden border-b border-white/5 flex items-center justify-center`}>
-                    {p.imageUrl ? (
-                      <img
-                        src={p.imageUrl}
-                        alt={p.title}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-85"
-                      />
-                    ) : (
-                      <>
-                        {/* Floating background blobs */}
-                        <div className="absolute top-5 left-10 w-24 h-24 rounded-full bg-cyan-400/10 blur-xl group-hover:bg-cyan-400/20 transition-colors" />
-                        <div className="absolute bottom-5 right-10 w-28 h-28 rounded-full bg-purple-500/10 blur-2xl group-hover:bg-purple-500/20 transition-colors" />
-                      </>
-                    )}
-
-                    {/* Visual schematic grids overlay */}
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
-                    
-                    {/* Highly stylized custom coordinate lines and labels mimicking canvas scanners */}
-                    <div className="absolute inset-x-4 top-4 flex items-center justify-between font-mono text-[9px] text-slate-400 tracking-wider z-10 uppercase">
-                      <span>SCAN_SEQUENCE // NO.{p.id}</span>
-                      <span>FPS: 120_CAPACITY</span>
-                    </div>
-
-                    {!p.imageUrl && (
-                      <div className="relative z-10 flex flex-col items-center gap-2">
-                        <div className="w-14 h-14 rounded-full bg-slate-900/80 border border-white/10 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform duration-500">
-                          <GraphicIcon className="w-6 h-6 animate-pulse" />
-                        </div>
-                        <span className="text-[10px] font-mono tracking-widest text-slate-400 font-semibold">
-                          {p.category.toUpperCase()} SYSTEM
-                        </span>
-                      </div>
-                    )}
-
-                    {p.imageUrl && (
-                      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-slate-950/80 border border-white/10 flex items-center justify-center text-cyan-400">
-                          <GraphicIcon className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="text-[9px] font-mono tracking-widest text-slate-200 uppercase">
-                          {p.category} SYSTEM
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Holographic targeting square corners */}
-                    <div className="absolute top-8 left-8 w-4 h-4 border-t border-l border-white/20 z-10" />
-                    <div className="absolute top-8 right-8 w-4 h-4 border-t border-r border-white/20 z-10" />
-                    <div className="absolute bottom-8 left-8 w-4 h-4 border-b border-l border-white/20 z-10" />
-                    <div className="absolute bottom-8 right-8 w-4 h-4 border-b border-r border-white/20 z-10" />
-                  </div>
-
-                  {/* 2. Structured Card Content & Title */}
-                  <div className="p-6 flex-1 flex flex-col justify-between">
-                    <div>
-                      {/* Category Label */}
-                      <span className="text-[10px] font-mono font-medium tracking-[0.2em] text-cyan-400 uppercase">
-                        {p.category}
-                      </span>
-                      
-                      {/* Name */}
-                      <h3 className="font-display font-medium text-lg text-white group-hover:text-cyan-300 transition-colors mt-2 mb-3">
-                        {p.title}
-                      </h3>
-                      
-                      {/* Overview */}
-                      <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
-                        {p.description}
-                      </p>
-
-                      {/* Dynamic Metrics Badges */}
-                      <div className="grid grid-cols-3 gap-2.5 px-3 py-3 rounded-xl bg-white/[0.01] border border-white/5 mb-6">
-                        {p.metrics.map((m, idx) => (
-                          <div key={idx} className="flex flex-col">
-                            <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider">
-                              {m.label}
-                            </span>
-                            <span className="text-xs sm:text-sm font-display font-bold text-slate-200 mt-1">
-                              {m.value}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Tech Badges */}
-                      <div className="flex flex-wrap gap-1.5 mb-6">
-                        {p.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 rounded-md text-[10px] font-mono tracking-wide text-slate-400 bg-white/5 border border-white/5"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* 3. Action Buttons Row (Interactive Dialog/Github/Live) */}
-                    <div className="flex items-center gap-3 border-t border-white/5 pt-4">
-                      {/* Case Study dialog button */}
-                      <button
-                        onClick={() => handleOpenCaseStudy(p)}
-                        className="flex-1 px-4 py-2.5 rounded-lg text-[10px] font-bold font-sans tracking-wider uppercase text-cyan-400 bg-cyan-950/20 border border-cyan-400/10 hover:bg-cyan-950/40 group-hover:border-cyan-400/30 transition-all flex items-center justify-center gap-1.5"
-                      >
-                        <FileText className="w-3.5 h-3.5" />
-                        Case Study
-                      </button>
-
-                      {/* Source Link */}
-                      <a
-                        href={p.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        referrerPolicy="no-referrer"
-                        className="p-2.5 rounded-lg border border-white/5 text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/10 transition-colors"
-                        aria-label="View Source Code Repository"
-                      >
-                        <Github className="w-4 h-4" />
-                      </a>
-
-                      {/* Live Demo Trigger */}
-                      <a
-                        href={p.liveUrl || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        referrerPolicy="no-referrer"
-                        className="p-2.5 rounded-lg border border-white/5 text-slate-400 hover:text-cyan-400 hover:bg-white/5 hover:border-cyan-400/20 transition-colors"
-                        aria-label="View Live Interactive Demo Website"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    </div>
-                  </div>
-                </motion.div>
+                  p={p}
+                  index={index}
+                  GraphicIcon={GraphicIcon}
+                  onOpenCaseStudy={handleOpenCaseStudy}
+                />
               );
             })}
           </AnimatePresence>
