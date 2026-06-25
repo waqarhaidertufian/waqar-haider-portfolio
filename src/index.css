@@ -496,3 +496,27 @@
     background-color: rgba(16, 185, 129, 0.08);
   }
 }
+
+/* Light mode overrides for Navbar Brand */
+.light-mode .brand-name-text {
+  background: linear-gradient(to right, #0f172a, #334155, #0f172a) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.light-mode .brand-name-text:hover,
+.light-mode .group:hover .brand-name-text {
+  background: linear-gradient(to right, #0f172a, #0891b2, #0e7490) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.light-mode .brand-subtitle-text {
+  color: #0891b2 !important; /* Richer cyan for contrast in light mode */
+}
+
+.light-mode .brand-subtitle-text:hover,
+.light-mode .group:hover .brand-subtitle-text {
+  color: #0369a1 !important;
+}
+

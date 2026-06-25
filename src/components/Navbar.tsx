@@ -113,10 +113,10 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
               </svg>
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-medium text-base md:text-lg tracking-[0.03em] bg-gradient-to-r from-white via-slate-100 to-slate-350 bg-clip-text text-transparent group-hover:from-white group-hover:via-cyan-100 group-hover:to-cyan-300 transition-all duration-300">
+              <span className="brand-name-text font-display font-medium text-base md:text-lg tracking-[0.03em] bg-gradient-to-r from-white via-slate-100 to-slate-350 bg-clip-text text-transparent group-hover:from-white group-hover:via-cyan-100 group-hover:to-cyan-300 transition-all duration-300">
                 Waqar Haider
               </span>
-              <span className="block text-[8px] font-mono tracking-[0.24em] text-cyan-400/90 uppercase transition-all duration-300 group-hover:text-cyan-300 group-hover:tracking-[0.27em]">
+              <span className="brand-subtitle-text block text-[8px] font-mono tracking-[0.24em] text-cyan-400/90 uppercase transition-all duration-300 group-hover:text-cyan-300 group-hover:tracking-[0.27em]">
                 AI / Full Stack Engineer
               </span>
             </div>
