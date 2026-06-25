@@ -17,6 +17,7 @@ interface ProjectCardProps {
 function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [entranceDone, setEntranceDone] = useState(false);
 
   // Motion values for interactive 3D mouse tracking
   const mouseX = useMotionValue(0);
@@ -51,23 +52,42 @@ function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProp
     mouseY.set(0);
   };
 
-  // Variants for auto-float 3D wobble (runs on mobile & desktop when not hovered)
+  // Variants for initial entry + auto-float 3D wobble
   const cardVariants = {
-    float: (customDelay: number) => ({
+    hidden: { 
+      opacity: 0, 
+      y: 60,
+      scale: 0.92,
+      rotateX: 12,
+      rotateY: -8,
+    },
+    visible: (customDelay: number) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      rotateY: 0,
+      transition: {
+        type: "spring",
+        stiffness: 60,
+        damping: 14,
+        delay: customDelay,
+      }
+    }),
+    float: {
       rotateX: [-3, 3, -3],
       rotateY: [-3.5, 3.5, -3.5],
       y: [-6, 6, -6],
       transition: {
-        duration: 6.5,
+        duration: 7,
         repeat: Infinity,
         repeatType: "mirror" as const,
         ease: "easeInOut",
-        delay: customDelay,
       }
-    }),
+    },
     hover: {
-      y: -10,
-      scale: 1.015,
+      scale: 1.025,
+      y: -12,
       transition: {
         duration: 0.3,
         ease: "easeOut"
@@ -81,10 +101,15 @@ function ProjectCard({ p, index, GraphicIcon, onOpenCaseStudy }: ProjectCardProp
       layout
       custom={index * 0.18} // staggered delay for auto-float
       variants={cardVariants}
-      animate={isHovered ? "hover" : "float"}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1 }}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
+      animate={isHovered ? "hover" : entranceDone ? "float" : "visible"}
+      onAnimationComplete={(definition) => {
+        if (definition === "visible") {
+          setEntranceDone(true);
+        }
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
