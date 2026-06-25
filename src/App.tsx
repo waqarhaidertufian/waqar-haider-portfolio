@@ -120,11 +120,11 @@ export default function App() {
           <ChatWidget />
 
           {/* Premium Footer Coordinates */}
-          <footer className="relative py-8 bg-white border-t border-slate-200 z-20 text-center font-sans select-none">
+          <footer className="relative py-8 bg-[#030014] border-t border-white/5 z-20 text-center font-sans select-none">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-2 text-center">
-              <span className="text-sm font-semibold text-slate-800">Waqar Developer</span>
-              <span className="text-xs text-slate-500">Senior Software Engineer | Full-Stack Developer | DevOps Enthusiast</span>
-              <span className="text-[11px] text-slate-400 mt-1">© 2026 Waqar Developer. All rights reserved.</span>
+              <span className="text-sm font-semibold text-slate-100">Waqar Developer</span>
+              <span className="text-xs text-slate-400">Senior Software Engineer | Full-Stack Developer | DevOps Enthusiast</span>
+              <span className="text-[11px] text-slate-500 mt-1">© 2026 Waqar Developer. All rights reserved.</span>
             </div>
           </footer>
         </div>
