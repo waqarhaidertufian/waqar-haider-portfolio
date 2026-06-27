@@ -117,7 +117,7 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
                 Waqar Haider
               </span>
               <span className="brand-subtitle-text block text-[8px] font-mono tracking-[0.24em] text-cyan-400/90 uppercase transition-all duration-300 group-hover:text-cyan-300 group-hover:tracking-[0.27em]">
-                AI / Full Stack Engineer
+                AI ENGINEER / FULL STACK DEVELOPER
               </span>
             </div>
           </a>
