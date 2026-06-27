@@ -48,19 +48,19 @@ export default function ChatWidget() {
         setHasAutoOpened(true);
         sessionStorage.setItem("portfolio_chat_has_visited", "true");
         
-        // Show notification banner
+        // Show notification banner for 3 seconds
         setShowNotification(true);
+        setTimeout(() => setShowNotification(false), 3000);
         
         // Play audio greeting using Web Speech API
         if ('speechSynthesis' in window) {
           setIsAudioPlaying(true);
-          const utterance = new SpeechSynthesisUtterance("Hi dear, how can I help you? I am a assistant of Waqar Haider");
+          const utterance = new SpeechSynthesisUtterance("Hi Dear, how can I help you? I am a assistant of Waqar Haider");
           utterance.rate = 0.9;
           utterance.pitch = 1;
           utterance.volume = 1;
           utterance.onend = () => {
             setIsAudioPlaying(false);
-            setTimeout(() => setShowNotification(false), 3000);
           };
           speechSynthesis.speak(utterance);
         }
@@ -184,7 +184,7 @@ export default function ChatWidget() {
           >
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             <span className="text-[10px] font-bold text-white tracking-wide">
-              Hi dear, how can I help you?
+              Hi Dear, how can I help you?
             </span>
           </motion.div>
         )}
