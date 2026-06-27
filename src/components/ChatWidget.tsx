@@ -38,23 +38,13 @@ export default function ChatWidget() {
     setSessionId(sid);
   }, []);
 
-  // Auto-open chatbot on first visit with audio greeting
+  // Play audio greeting on first visit without opening chat
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("portfolio_chat_has_visited");
     if (!hasVisited && !hasAutoOpened) {
       const timer = setTimeout(() => {
-        setIsOpen(true);
         setHasAutoOpened(true);
         sessionStorage.setItem("portfolio_chat_has_visited", "true");
-        
-        // Add "How can I help you?" message
-        const helpMessage: ChatMessage = {
-          id: "auto_help",
-          sender: "bot",
-          text: "How can I help you?",
-          timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
-        };
-        setMessages((prev) => [...prev, helpMessage]);
         
         // Play audio greeting using Web Speech API
         if ('speechSynthesis' in window) {
@@ -64,7 +54,7 @@ export default function ChatWidget() {
           utterance.volume = 1;
           speechSynthesis.speak(utterance);
         }
-      }, 2000); // Open after 2 seconds
+      }, 2000); // Play after 2 seconds
       
       return () => clearTimeout(timer);
     }
