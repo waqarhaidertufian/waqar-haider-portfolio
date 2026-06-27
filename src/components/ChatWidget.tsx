@@ -48,9 +48,9 @@ export default function ChatWidget() {
         setHasAutoOpened(true);
         sessionStorage.setItem("portfolio_chat_has_visited", "true");
         
-        // Show notification banner for 3 seconds
+        // Show notification banner for 5 seconds
         setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 3000);
+        setTimeout(() => setShowNotification(false), 5000);
         
         // Play audio greeting using Web Speech API
         if ('speechSynthesis' in window) {
