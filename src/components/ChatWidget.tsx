@@ -55,7 +55,7 @@ export default function ChatWidget() {
         // Play audio greeting using Web Speech API
         if ('speechSynthesis' in window) {
           setIsAudioPlaying(true);
-          const utterance = new SpeechSynthesisUtterance("Hi Dear, how can I help you? I am a assistant of Waqar Haider");
+          const utterance = new SpeechSynthesisUtterance("Hi Dear, how I can help you? I am a assistant of Waqar Haider");
           utterance.rate = 0.9;
           utterance.pitch = 1;
           utterance.volume = 1;
@@ -184,7 +184,7 @@ export default function ChatWidget() {
           >
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
             <span className="text-[10px] font-bold text-white tracking-wide">
-              Hi Dear, how can I help you?
+              Hi Dear, how I can help you?
             </span>
           </motion.div>
         )}
