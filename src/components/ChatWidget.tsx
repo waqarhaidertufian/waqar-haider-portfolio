@@ -25,6 +25,8 @@ export default function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [sessionId, setSessionId] = useState("");
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
   
   const chatScrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,12 +48,20 @@ export default function ChatWidget() {
         setHasAutoOpened(true);
         sessionStorage.setItem("portfolio_chat_has_visited", "true");
         
+        // Show notification banner
+        setShowNotification(true);
+        
         // Play audio greeting using Web Speech API
         if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance("How can I help you?");
+          setIsAudioPlaying(true);
+          const utterance = new SpeechSynthesisUtterance("Hi dear, how can I help you? I am a assistant of Waqar Haider");
           utterance.rate = 0.9;
           utterance.pitch = 1;
           utterance.volume = 1;
+          utterance.onend = () => {
+            setIsAudioPlaying(false);
+            setTimeout(() => setShowNotification(false), 3000);
+          };
           speechSynthesis.speak(utterance);
         }
         
@@ -163,6 +173,23 @@ export default function ChatWidget() {
       }}
       className="fixed bottom-6 right-6 z-[999] select-none font-sans flex flex-col items-end touch-none"
     >
+      {/* Top Notification Banner */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-[1000] px-4 py-2 bg-gradient-to-r from-cyan-500/90 to-purple-600/90 backdrop-blur-md rounded-full border border-white/20 shadow-[0_4px_20px_rgba(6,182,212,0.3)] flex items-center gap-2"
+          >
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+            <span className="text-xs font-bold text-white tracking-wide">
+              Hi dear, how can I help you? I am a assistant of Waqar Haider
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* 1. Conversations Sliding Drawer Panel */}
       <AnimatePresence>
         {isOpen && (
@@ -383,8 +410,8 @@ export default function ChatWidget() {
                   {/* Brand dot */}
                   <circle cx="21.2" cy="17.2" r="1.1" fill="currentColor" stroke="none" />
                 </svg>
-                {/* Green notification indicator */}
-                <span className="absolute -top-1 -right-1.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-slate-950 inline-block" />
+                {/* Green notification indicator - pulsing when audio playing */}
+                <span className={`absolute -top-1 -right-1.5 w-2.5 h-2.5 rounded-full border border-slate-950 inline-block ${isAudioPlaying ? 'bg-emerald-400 animate-ping' : 'bg-emerald-500'}`} />
               </motion.div>
             )}
           </AnimatePresence>
