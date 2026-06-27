@@ -119,9 +119,9 @@ export default function ChatWidget() {
       dragMomentum={false}
       dragElastic={0.08}
       dragConstraints={{
-        left: -window.innerWidth + (typeof window !== 'undefined' && window.innerWidth < 640 ? window.innerWidth * 0.9 : 380) + 24,
+        left: -window.innerWidth + (typeof window !== 'undefined' && window.innerWidth < 640 ? window.innerWidth * 0.85 : 330) + 24,
         right: 24,
-        top: -window.innerHeight + 600,
+        top: -window.innerHeight + 470,
         bottom: 24
       }}
       className="fixed bottom-6 right-6 z-[999] select-none font-sans flex flex-col items-end touch-none"
@@ -134,7 +134,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 35 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="w-[90vw] sm:w-[380px] h-[520px] glass-crystal-panel rounded-2xl flex flex-col justify-between overflow-hidden mb-4 relative z-[999]"
+            className="w-[85vw] sm:w-[330px] h-[450px] glass-crystal-panel rounded-2xl flex flex-col justify-between overflow-hidden mb-4 relative z-[999]"
           >
             {/* Animated Liquid Crystal Background Blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 rounded-2xl">
@@ -154,7 +154,7 @@ export default function ChatWidget() {
                   dragControls.start(e);
                 }
               }}
-              className="px-4 py-3 bg-white/[0.01] border-b border-white/5 flex flex-col cursor-grab active:cursor-grabbing select-none z-10"
+              className="px-3 py-2.5 bg-white/[0.01] border-b border-white/5 flex flex-col cursor-grab active:cursor-grabbing select-none z-10"
             >
               {/* Drag Handle Indicator Pill */}
               <div className="w-12 h-1 bg-white/10 rounded-full mx-auto mb-2 shrink-0 opacity-40 hover:opacity-100 hover:bg-cyan-400/40 transition-all duration-200 flex items-center justify-center">
@@ -191,7 +191,7 @@ export default function ChatWidget() {
             {/* Chat Body Scroll Container */}
             <div
               ref={chatScrollRef}
-              className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin select-text z-10 relative"
+              className="flex-1 overflow-y-auto p-3 space-y-2.5 scrollbar-thin select-text z-10 relative"
             >
               {messages.map((m) => {
                 const isBot = m.sender === "bot";
@@ -215,7 +215,7 @@ export default function ChatWidget() {
 
                     <div className="flex flex-col">
                       <div
-                        className={`p-3 text-[12px] rounded-xl leading-relaxed backdrop-blur-md border border-white/10 ${
+                        className={`p-2.5 text-[11px] rounded-xl leading-relaxed backdrop-blur-md border border-white/10 ${
                           isBot
                             ? "bg-white/[0.03] text-slate-200 rounded-tl-none shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
                             : "bg-gradient-to-r from-cyan-500/80 to-purple-600/80 font-sans font-medium text-white rounded-tr-none shadow-[0_6px_15px_rgba(6,182,212,0.2)]"
@@ -264,7 +264,7 @@ export default function ChatWidget() {
             {/* Form messaging input text-area controller */}
             <form
               onSubmit={handleFormSubmit}
-              className="px-4 py-3 border-t border-white/5 bg-black/20 flex items-center gap-2 z-10"
+              className="px-3 py-2.5 border-t border-white/5 bg-black/20 flex items-center gap-2 z-10"
             >
               <input
                 type="text"
@@ -294,7 +294,7 @@ export default function ChatWidget() {
           onPointerDown={(e) => !isOpen && dragControls.start(e)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500/80 via-purple-600/80 to-cyan-400/80 flex items-center justify-center text-white border border-white/20 backdrop-blur-md shadow-[0_10px_35px_rgba(6,182,212,0.4),_inset_0_2px_4px_rgba(255,255,255,0.4)] cursor-pointer outline-none relative hover:brightness-110 duration-300 overflow-hidden active:cursor-grabbing"
+          className="w-12 h-12 rounded-full bg-gradient-to-tr from-cyan-500/80 via-purple-600/80 to-cyan-400/80 flex items-center justify-center text-white border border-white/20 backdrop-blur-md shadow-[0_10px_35px_rgba(6,182,212,0.4),_inset_0_2px_4px_rgba(255,255,255,0.4)] cursor-pointer outline-none relative hover:brightness-110 duration-300 overflow-hidden active:cursor-grabbing"
           aria-label="Toggle AI Virtual Assistant"
         >
           {/* Animated Sheen Overlay */}

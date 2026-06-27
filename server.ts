@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
 import { sql } from "@vercel/postgres";
 
+dotenv.config({ path: ".env.local" });
 dotenv.config();
 
 // Initialize server-side Gemini API
