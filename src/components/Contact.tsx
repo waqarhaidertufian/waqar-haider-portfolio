@@ -162,7 +162,7 @@ export default function Contact() {
                 {/* Google Map Embed with Cyber/Dark styling */}
                 <iframe
                   title="Faisalabad Area Map Preview"
-                  src="https://maps.google.com/maps?q=31.4632,73.1802&z=13&ie=UTF8&iwloc=&output=embed"
+                  src="https://maps.google.com/maps?q=31.4514,73.1625&z=13&ie=UTF8&iwloc=&output=embed"
                   width="100%"
                   height="100%"
                   className="absolute inset-0 border-0 opacity-50 group-hover:opacity-75 transition-opacity duration-500"
@@ -188,10 +188,10 @@ export default function Contact() {
                 <div className="relative z-10 flex flex-col items-center select-none text-center p-3 bg-black/80 backdrop-blur-sm rounded-lg border border-white/5 pointer-events-none">
                   <Compass className="w-5 h-5 text-cyan-400 animate-spin-slow mb-1" />
                   <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-200">
-                    Faisalabad Campus Area Mapped
+                    Ma Raza Garden, Faisalabad
                   </span>
                   <span className="text-[9px] font-mono text-slate-400 mt-0.5">
-                    Lat: 31.4632 | Lon: 73.1802
+                    Lat: 31.4514 | Lon: 73.1625
                   </span>
                 </div>
               </div>
@@ -358,7 +358,7 @@ export default function Contact() {
               {/* Real Interactive Google Map */}
               <iframe
                 title="Faisalabad Area Map Interactive"
-                src="https://maps.google.com/maps?q=31.4632,73.1802&z=14&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=31.4514,73.1625&z=14&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 className="w-full h-full border-0"
@@ -375,7 +375,7 @@ export default function Contact() {
                 </div>
                 <div className="flex items-center gap-2">
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=31.4632,73.1802"
+                    href="https://www.google.com/maps/search/?api=1&query=31.4514,73.1625"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="pointer-events-auto p-2 rounded-lg bg-black/85 border border-white/5 hover:border-cyan-400/50 hover:text-cyan-400 text-slate-400 transition backdrop-blur-sm flex items-center gap-1.5 cursor-pointer text-xs font-mono"
