@@ -173,18 +173,18 @@ export default function ChatWidget() {
       }}
       className="fixed bottom-6 right-6 z-[999] select-none font-sans flex flex-col items-end touch-none"
     >
-      {/* Top Notification Banner */}
+      {/* Notification Banner near chatbot */}
       <AnimatePresence>
         {showNotification && (
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 z-[1000] px-4 py-2 bg-gradient-to-r from-cyan-500/90 to-purple-600/90 backdrop-blur-md rounded-full border border-white/20 shadow-[0_4px_20px_rgba(6,182,212,0.3)] flex items-center gap-2"
+            initial={{ opacity: 0, x: 50, y: 20 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 50, y: 20 }}
+            className="mb-2 px-3 py-1.5 bg-gradient-to-r from-cyan-500/90 to-purple-600/90 backdrop-blur-md rounded-full border border-white/20 shadow-[0_4px_20px_rgba(6,182,212,0.3)] flex items-center gap-2 whitespace-nowrap"
           >
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-            <span className="text-xs font-bold text-white tracking-wide">
-              Hi dear, how can I help you? I am a assistant of Waqar Haider
+            <span className="text-[10px] font-bold text-white tracking-wide">
+              Hi dear, how can I help you?
             </span>
           </motion.div>
         )}
