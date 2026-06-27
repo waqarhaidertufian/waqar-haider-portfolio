@@ -313,8 +313,8 @@ export const EDUCATION_DATA: EducationItem[] = [
 
 export const ACHIEVEMENTS_DATA: Achievement[] = [
   { id: "a1", metric: "Projects Success", value: 50, suffix: "+", label: "Global Clients Handled" },
-  { id: "a2", metric: "AI Models", value: 12, suffix: "+", label: "AI Models Built" },
-  { id: "a3", metric: "Completed Projects", value: 18, suffix: "+", label: "Projects Completed" },
+  { id: "a2", metric: "AI Models", value: 32, suffix: "+", label: "AI Models Built" },
+  { id: "a3", metric: "Completed Projects", value: 68, suffix: "+", label: "Projects Completed" },
   { id: "a4", metric: "Solutions", value: 100, suffix: "%", label: "Client Ready Solutions" }
 ];
 
