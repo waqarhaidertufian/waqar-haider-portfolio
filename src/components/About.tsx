@@ -3,15 +3,17 @@ import { BrainCircuit, Cpu, ShieldCheck, MapPin, ExternalLink, GraduationCap, Aw
 import waqarPortrait from "../../assets/waqar_portrait.png";
 
 const COMPANIES = [
+  "Systems Limited",
+  "NETSOL Technologies",
+  "10Pearls",
+  "Devsinc",
+  "Folio3",
+  "Cubix",
+  "iCreativez Technologies",
   "Microsoft",
   "Google",
-  "NVIDIA",
-  "Apple",
-  "Tesla",
-  "Stripe",
   "Notion",
-  "Figma",
-  "Linear"
+  "NVIDIA",
 ];
 
 export default function About() {
