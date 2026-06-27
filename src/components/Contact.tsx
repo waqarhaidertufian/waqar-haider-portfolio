@@ -202,7 +202,7 @@ export default function Contact() {
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/5 bg-[#090520]/25 shadow-2xl">
               <h3 className="font-display font-semibold text-lg text-white mb-6">
-                Transmit Secure Form Packet
+                Send us a Message
               </h3>
 
               <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -321,7 +321,7 @@ export default function Contact() {
                     ) : (
                       <>
                         <Send className="w-4 h-4 shrink-0" />
-                        <span>Transmit Packet</span>
+                        <span>SEND A MESSAGE</span>
                       </>
                     )}
                   </span>
