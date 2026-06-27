@@ -40,49 +40,31 @@ export default function ChatWidget() {
     setSessionId(sid);
   }, []);
 
-  // Play audio greeting on first user interaction (browsers block auto-play)
-  useEffect(() => {
+  // Play audio greeting only when user clicks chatbot button
+  const handleChatbotClick = () => {
     const hasVisited = sessionStorage.getItem("portfolio_chat_has_visited");
     if (!hasVisited && !hasAutoOpened) {
-      const handleUserInteraction = () => {
-        setHasAutoOpened(true);
-        sessionStorage.setItem("portfolio_chat_has_visited", "true");
-        
-        // Show notification banner for 5 seconds
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 5000);
-        
-        // Play audio greeting using Web Speech API
-        if ('speechSynthesis' in window) {
-          setIsAudioPlaying(true);
-          const utterance = new SpeechSynthesisUtterance("Hi Dear, how I can help you? I am a assistant of Waqar Haider");
-          utterance.rate = 0.9;
-          utterance.pitch = 1;
-          utterance.volume = 1;
-          utterance.onend = () => {
-            setIsAudioPlaying(false);
-          };
-          speechSynthesis.speak(utterance);
-        }
-        
-        // Remove event listeners after first interaction
-        document.removeEventListener('click', handleUserInteraction);
-        document.removeEventListener('touchstart', handleUserInteraction);
-        document.removeEventListener('keydown', handleUserInteraction);
-      };
+      setHasAutoOpened(true);
+      sessionStorage.setItem("portfolio_chat_has_visited", "true");
       
-      // Add event listeners for user interaction
-      document.addEventListener('click', handleUserInteraction);
-      document.addEventListener('touchstart', handleUserInteraction);
-      document.addEventListener('keydown', handleUserInteraction);
+      // Show notification banner for 5 seconds
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 5000);
       
-      return () => {
-        document.removeEventListener('click', handleUserInteraction);
-        document.removeEventListener('touchstart', handleUserInteraction);
-        document.removeEventListener('keydown', handleUserInteraction);
-      };
+      // Play audio greeting using Web Speech API
+      if ('speechSynthesis' in window) {
+        setIsAudioPlaying(true);
+        const utterance = new SpeechSynthesisUtterance("Hi Dear, how I can help you? I am a assistant of Waqar Haider");
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        utterance.onend = () => {
+          setIsAudioPlaying(false);
+        };
+        speechSynthesis.speak(utterance);
+      }
     }
-  }, [hasAutoOpened]);
+  };
 
   // Auto scroll to latest statement
   useEffect(() => {
@@ -354,7 +336,10 @@ export default function ChatWidget() {
       {/* 2. Floating robotic core toggle circle trigger & Label */}
       <div className="flex flex-col items-center gap-1.5 mt-2 z-[999]">
         <motion.button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => {
+            handleChatbotClick();
+            setIsOpen(!isOpen);
+          }}
           onPointerDown={(e) => !isOpen && dragControls.start(e)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
