@@ -353,7 +353,7 @@ export default function ChatWidget() {
           </AnimatePresence>
         </motion.button>
         <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase select-none cursor-grab active:cursor-grabbing" onPointerDown={(e) => !isOpen && dragControls.start(e)}>
-          AI Chatbot
+          Waqar AI
         </span>
       </div>
     </motion.div>
