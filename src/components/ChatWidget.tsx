@@ -38,11 +38,11 @@ export default function ChatWidget() {
     setSessionId(sid);
   }, []);
 
-  // Play audio greeting on first visit without opening chat
+  // Play audio greeting on first user interaction (browsers block auto-play)
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("portfolio_chat_has_visited");
     if (!hasVisited && !hasAutoOpened) {
-      const timer = setTimeout(() => {
+      const handleUserInteraction = () => {
         setHasAutoOpened(true);
         sessionStorage.setItem("portfolio_chat_has_visited", "true");
         
@@ -54,9 +54,23 @@ export default function ChatWidget() {
           utterance.volume = 1;
           speechSynthesis.speak(utterance);
         }
-      }, 2000); // Play after 2 seconds
+        
+        // Remove event listeners after first interaction
+        document.removeEventListener('click', handleUserInteraction);
+        document.removeEventListener('touchstart', handleUserInteraction);
+        document.removeEventListener('keydown', handleUserInteraction);
+      };
       
-      return () => clearTimeout(timer);
+      // Add event listeners for user interaction
+      document.addEventListener('click', handleUserInteraction);
+      document.addEventListener('touchstart', handleUserInteraction);
+      document.addEventListener('keydown', handleUserInteraction);
+      
+      return () => {
+        document.removeEventListener('click', handleUserInteraction);
+        document.removeEventListener('touchstart', handleUserInteraction);
+        document.removeEventListener('keydown', handleUserInteraction);
+      };
     }
   }, [hasAutoOpened]);
 
