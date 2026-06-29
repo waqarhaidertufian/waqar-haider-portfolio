@@ -68,6 +68,7 @@ export interface Testimonial {
   feedback: string;
   rating: number;
   avatarPlaceholderSeed: string;
+  avatarUrl?: string;
 }
 
 export interface ResearchInterest {

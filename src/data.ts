@@ -333,7 +333,8 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     company: "Biotech Horizon Systems",
     feedback: "Waqar's integration of the Smart Diagnosis model exceeded all expected benchmarks. His work does not just show extreme machine learning mastery—the interface looks like a premium, sleek product that our medical diagnostic partners absolutely love.",
     rating: 5,
-    avatarPlaceholderSeed: "Alexander"
+    avatarPlaceholderSeed: "Alexander",
+    avatarUrl: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "ts2",
@@ -342,7 +343,8 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     company: "Vortex Labs Global",
     feedback: "An engineer with deep technical expertise in computer vision who also understands premium aesthetic details is extremely rare. Waqar designed our real-time biometric terminal with breathtaking speed, solidifying our security pipelines across 14 remote sites.",
     rating: 5,
-    avatarPlaceholderSeed: "Sania"
+    avatarPlaceholderSeed: "Sania",
+    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80"
   },
   {
     id: "ts3",
@@ -351,7 +353,48 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     company: "Sensus Automation Inc.",
     feedback: "Working with Waqar to build our automated video and speech evaluator assistant was a transformative masterclass. He operates at Silicon Valley levels of speed, visual care, and algorithmic efficiency. Simply outstanding work.",
     rating: 5,
-    avatarPlaceholderSeed: "Marcus"
+    avatarPlaceholderSeed: "Marcus",
+    avatarUrl: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    id: "ts4",
+    name: "Amina Yasmin",
+    role: "Head of AI Solutions",
+    company: "Systems Limited (Pakistan)",
+    feedback: "Waqar's ability to construct scalable and efficient computer vision pipelines is extraordinary. He integrated real-time tracking for our automated warehouse systems, delivering unmatched performance and accuracy.",
+    rating: 5,
+    avatarPlaceholderSeed: "Amina",
+    avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    id: "ts5",
+    name: "Bilal Khan",
+    role: "Director of Product",
+    company: "DevSinc (Pakistan)",
+    feedback: "Waqar developed our intelligent document parsing module with absolute precision. His deep knowledge of OCR models and NLP pipelines reduced processing overheads by 40%. A top-tier engineer!",
+    rating: 5,
+    avatarPlaceholderSeed: "Bilal",
+    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    id: "ts6",
+    name: "Sophia Chen",
+    role: "Chief Technology Officer",
+    company: "CloudNodes (Germany)",
+    feedback: "Deploying deep learning models on edge devices is challenging, but Waqar made it look easy. He successfully compiled and optimized our semantic segmentation models for low-power IoT micro-controllers.",
+    rating: 5,
+    avatarPlaceholderSeed: "Sophia",
+    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80"
+  },
+  {
+    id: "ts7",
+    name: "Jonathan Cole",
+    role: "Lead AI Architect",
+    company: "NeuralPath Inc. (USA)",
+    feedback: "Working with Waqar to implement multi-agent feedback systems was highly collaborative and rewarding. His speed of execution, algorithmic knowledge, and eye for sleek UI details make him a rare find.",
+    rating: 5,
+    avatarPlaceholderSeed: "Jonathan",
+    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80"
   }
 ];
 

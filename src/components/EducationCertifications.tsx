@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EDUCATION_DATA, CERTIFICATIONS_DATA, TESTIMONIALS_DATA } from "../data";
 import { GraduationCap, Award, Star, Quote, ChevronLeft, ChevronRight, CheckCircle2, BadgeCheck } from "lucide-react";
 
 export default function EducationCertifications() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const prevTestimonial = () => {
     setActiveTestimonial((prev) => (prev === 0 ? TESTIMONIALS_DATA.length - 1 : prev - 1));
@@ -13,6 +15,20 @@ export default function EducationCertifications() {
   const nextTestimonial = () => {
     setActiveTestimonial((prev) => (prev === TESTIMONIALS_DATA.length - 1 ? 0 : prev + 1));
   };
+
+  useEffect(() => {
+    setImageError(false);
+  }, [activeTestimonial]);
+
+  useEffect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(() => {
+      nextTestimonial();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isHovered, activeTestimonial]);
 
   // Helper to resolve custom badge colors for certifications
   const getBadgeColorStyles = (color: string) => {
@@ -126,9 +142,12 @@ export default function EducationCertifications() {
                 );
               })}
             </div>
-
             {/* SECTION 10 - Testimonials Luxury Slider block */}
-            <div className="colorful-glow-border p-[1.5px] rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.25)] mt-4">
+            <div 
+              className="colorful-glow-border p-[1.5px] rounded-2xl shadow-[0_0_30px_rgba(6,182,212,0.25)] mt-4"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               <div className="bg-white p-6 rounded-[15px] select-none relative">
                 <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                   <span className="text-[10px] font-mono text-cyan-600 uppercase tracking-[0.2em] font-semibold">
@@ -160,10 +179,19 @@ export default function EducationCertifications() {
                 {/* Slidover client details and controller links */}
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mt-6 pt-4 border-t border-slate-100">
                   <div className="flex items-center gap-3">
-                    {/* Cyber client avatar outline placeholder */}
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-100 to-purple-100 border border-cyan-300 flex items-center justify-center font-mono text-xs font-bold text-cyan-700 uppercase shrink-0">
-                      {TESTIMONIALS_DATA[activeTestimonial].name.charAt(0)}
-                    </div>
+                    {/* Cyber client avatar outline placeholder or image */}
+                    {TESTIMONIALS_DATA[activeTestimonial].avatarUrl && !imageError ? (
+                      <img
+                        src={TESTIMONIALS_DATA[activeTestimonial].avatarUrl}
+                        alt={TESTIMONIALS_DATA[activeTestimonial].name}
+                        className="w-10 h-10 rounded-full object-cover border border-cyan-300 shrink-0"
+                        onError={() => setImageError(true)}
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-100 to-purple-100 border border-cyan-300 flex items-center justify-center font-mono text-xs font-bold text-cyan-700 uppercase shrink-0">
+                        {TESTIMONIALS_DATA[activeTestimonial].name.charAt(0)}
+                      </div>
+                    )}
                     <div>
                       <h4 className="font-sans font-bold text-xs sm:text-sm text-slate-900">
                         {TESTIMONIALS_DATA[activeTestimonial].name}
