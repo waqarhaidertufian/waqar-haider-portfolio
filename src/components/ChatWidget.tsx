@@ -213,8 +213,8 @@ export default function ChatWidget() {
                     <Cpu className="w-4 h-4 text-cyan-400 animate-spin-slow" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-sans font-bold text-slate-100 flex items-center gap-1.5 uppercase tracking-wide">
-                      WAQAR_CO-BOT v1.2
+                    <h4 className="text-xs font-sans font-bold text-slate-100 flex items-center gap-1.5 tracking-wide">
+                      AURA by Waqar | AI Portfolio Assistant
                     </h4>
                     <p className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-ping" />
@@ -401,8 +401,8 @@ export default function ChatWidget() {
             )}
           </AnimatePresence>
         </motion.button>
-        <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase select-none cursor-grab active:cursor-grabbing" onPointerDown={(e) => !isOpen && dragControls.start(e)}>
-          Waqar AI
+        <span className="text-[10px] font-mono font-bold tracking-widest text-slate-400 select-none cursor-grab active:cursor-grabbing" onPointerDown={(e) => !isOpen && dragControls.start(e)}>
+          AURA by Waqar
         </span>
       </div>
     </motion.div>
