@@ -49,41 +49,192 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   }, [onComplete]);
 
   return (
-    <div className="fixed inset-0 bg-[#030014] z-[9999] flex flex-col items-center justify-center p-6 select-none font-sans overflow-hidden">
-      {/* Background Matrix Mesh */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.07),transparent_70%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-40" />
+    <div className="fixed inset-0 bg-[#050510] z-[9999] flex flex-col items-center justify-center p-6 select-none font-sans overflow-hidden">
+      {/* Simple gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#050510] via-[#0a0a20] to-[#0f0f30]" />
+      
+      {/* Moving glowing diamonds */}
+      {[...Array(30)].map((_, i) => (
+        <motion.div
+          key={`diamond-${i}`}
+          className="absolute"
+          style={{
+            width: 2 + Math.random() * 3,
+            height: 2 + Math.random() * 3,
+            background: i % 3 === 0 ? 'rgba(255,255,255,0.8)' : i % 3 === 1 ? 'rgba(6,182,212,0.8)' : 'rgba(139,92,246,0.8)',
+              clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+              boxShadow: i % 3 === 0 ? '0 0 10px rgba(255,255,255,0.5)' : i % 3 === 1 ? '0 0 10px rgba(6,182,212,0.5)' : '0 0 10px rgba(139,92,246,0.5)'
+          }}
+          animate={{
+            y: [0, -200 - Math.random() * 150, 0],
+            x: [0, Math.random() * 80 - 40, 0],
+            rotate: [0, 180, 360],
+            opacity: [0, 1, 0],
+            scale: [0, 1, 0]
+          }}
+          transition={{
+            duration: 5 + Math.random() * 4,
+            repeat: Infinity,
+            delay: Math.random() * 4,
+            ease: "easeInOut"
+          }}
+          initial={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`
+          }}
+        />
+      ))}
 
       <div className="w-full max-w-xl flex flex-col items-center relative z-10">
-        {/* Animated Cyber Core Logo */}
-        <div className="relative mb-8">
+        {/* Premium W Logo */}
+        <div className="relative mb-10">
           <motion.div
-            className="w-16 h-16 rounded-2xl bg-cyan-950/40 border border-cyan-400/40 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+            className="relative"
             animate={{
-              rotate: 360,
-              borderRadius: ["24%", "50%", "24%"],
-              borderColor: ["#06b6d4", "#8b5cf6", "#06b6d4"]
+              scale: [1, 1.05, 1],
+              rotate: [0, 2, -2, 0]
             }}
             transition={{
-              duration: 8,
+              duration: 4,
               repeat: Infinity,
-              ease: "linear"
+              ease: "easeInOut"
             }}
           >
-            <Cpu className="w-8 h-8 text-cyan-400" />
+            {/* Outer glow ring */}
+            <motion.div
+              className="absolute inset-0 rounded-full"
+              animate={{
+                boxShadow: [
+                  "0 0 30px rgba(139,92,246,0.3), 0 0 60px rgba(6,182,212,0.2)",
+                  "0 0 50px rgba(6,182,212,0.4), 0 0 80px rgba(236,72,153,0.2)",
+                  "0 0 30px rgba(139,92,246,0.3), 0 0 60px rgba(6,182,212,0.2)"
+                ]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            {/* Rotating border */}
+            <motion.div
+              className="absolute inset-0 rounded-full border-2 border-transparent"
+              animate={{
+                rotate: 360,
+                borderColor: ["rgba(139,92,246,0.5)", "rgba(6,182,212,0.5)", "rgba(236,72,153,0.5)", "rgba(139,92,246,0.5)"]
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{
+                borderTopColor: "rgba(139,92,246,0.8)",
+                borderRightColor: "rgba(6,182,212,0.8)",
+                borderBottomColor: "rgba(236,72,153,0.8)",
+                borderLeftColor: "rgba(139,92,246,0.8)"
+              }}
+            />
+            {/* W Letter */}
+            <div className="relative w-24 h-24 flex items-center justify-center bg-gradient-to-br from-purple-900/20 to-cyan-900/20 rounded-full backdrop-blur-sm border border-purple-500/30">
+              <motion.span
+                className="font-display font-bold text-5xl bg-gradient-to-r from-purple-400 via-cyan-400 to-pink-400 bg-clip-text text-transparent"
+                animate={{
+                  backgroundPosition: ["0%", "100%", "0%"]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{
+                  backgroundSize: "200% auto"
+                }}
+              >
+                W
+              </motion.span>
+            </div>
           </motion.div>
-          {/* Orbital glowing items */}
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-purple-500 rounded-full animate-ping opacity-75" />
-          <span className="absolute -bottom-1 -left-1 w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse" />
+          {/* Orbiting dots */}
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-cyan-400 rounded-full"
+              animate={{
+                rotate: 360,
+                x: [0, Math.cos((i * 120) * Math.PI / 180) * 60],
+                y: [0, Math.sin((i * 120) * Math.PI / 180) * 60]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 1.33
+              }}
+              style={{
+                boxShadow: "0 0 10px rgba(6,182,212,0.8)"
+              }}
+            />
+          ))}
         </div>
 
         {/* Title */}
-        <h2 className="font-display font-medium text-2xl md:text-3xl tracking-wider text-slate-100 text-center mb-1">
-          WAQAR HAIDER
-        </h2>
-        <p className="text-xs font-mono tracking-[0.2em] text-cyan-400/85 mb-8">
-          AI ENGINEER / FULL STACK DEVELOPER
-        </p>
+        <motion.h2 
+          className="font-display font-medium text-2xl md:text-3xl tracking-wider text-slate-100 text-center mb-1"
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ 
+            duration: 1.2, 
+            ease: [0.22, 1, 0.36, 1],
+            delay: 0.3
+          }}
+        >
+          <motion.span
+            className="inline-block"
+            animate={{
+              backgroundPosition: ["0%", "100%", "0%"]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            style={{
+              background: "linear-gradient(90deg, #fff, #06b6d4, #8b5cf6, #fff)",
+              backgroundSize: "200% auto",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent"
+            }}
+          >
+            WAQAR HAIDER
+          </motion.span>
+        </motion.h2>
+        <motion.p 
+          className="text-xs font-mono tracking-[0.2em] text-cyan-400/85 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 1, 
+            ease: [0.22, 1, 0.36, 1],
+            delay: 0.5
+          }}
+        >
+          <motion.span
+            className="inline-block"
+            animate={{
+              opacity: [0.7, 1, 0.7],
+              letterSpacing: ["0.2em", "0.25em", "0.2em"]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            AI ENGINEER / FULL STACK DEVELOPER
+          </motion.span>
+        </motion.p>
 
         {/* Console Box */}
         <div className="w-full h-24 bg-[#090520]/80 border border-purple-500/10 rounded-lg p-3.5 font-mono text-[11px] md:text-xs text-slate-300 flex flex-col gap-1.5 mb-6 overflow-hidden shadow-inner">

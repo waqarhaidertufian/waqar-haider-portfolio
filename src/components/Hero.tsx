@@ -35,18 +35,31 @@ export default function Hero() {
     const PARTICLE_COUNT = Math.min(Math.floor((width * height) / 10000), 85);
     const PROXIMITY_LIMIT = 115;
 
-    // Build neural node pool
+    // Build neural node pool with premium luxury colors
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const radius = Math.random() * 2 + 1.5;
+      const radius = Math.random() * 2.5 + 2;
+      const colorIndex = i % 6;
+      let color;
+      
+      // Premium luxury color palette
+      switch(colorIndex) {
+        case 0: color = "rgba(6, 182, 212, 0.95)"; break; // Cyan
+        case 1: color = "rgba(139, 92, 246, 0.95)"; break; // Purple
+        case 2: color = "rgba(236, 72, 153, 0.95)"; break; // Pink
+        case 3: color = "rgba(251, 191, 36, 0.9)"; break; // Gold
+        case 4: color = "rgba(255, 255, 255, 0.95)"; break; // Platinum white
+        case 5: color = "rgba(167, 139, 250, 0.95)"; break; // Lavender
+      }
+      
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
         radius: radius,
         baseRadius: radius,
-        color: i % 4 === 0 ? "rgba(6, 182, 212, 0.85)" : i % 4 === 1 ? "rgba(139, 92, 246, 0.85)" : "rgba(16, 185, 129, 0.85)",
-        pulseSpeed: Math.random() * 0.03 + 0.01,
+        color: color,
+        pulseSpeed: Math.random() * 0.04 + 0.02,
         pulseTime: Math.random() * Math.PI * 2
       });
     }
@@ -113,18 +126,26 @@ export default function Hero() {
           }
         }
 
-        // Draw node center point
+        // Draw node center point with premium glow
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 15;
         ctx.shadowColor = p.color;
         ctx.fill();
+        
+        // Add inner glow ring for luxury effect
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
+        ctx.strokeStyle = p.color.replace("0.95", "0.3");
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        
         ctx.shadowBlur = 0; // Reset shadow for lines speed
       });
 
-      // 2. Draw proximity spider webbing
-      ctx.lineWidth = 0.55;
+      // 2. Draw proximity spider webbing with premium gradients
+      ctx.lineWidth = 0.7;
       for (let i = 0; i < particles.length; i++) {
         const pi = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
@@ -135,31 +156,42 @@ export default function Hero() {
 
           if (dist < PROXIMITY_LIMIT) {
             const alpha = (PROXIMITY_LIMIT - dist) / PROXIMITY_LIMIT;
-            // Shifting gradient color between the nodes
+            // Premium gradient color between the nodes
             const grad = ctx.createLinearGradient(pi.x, pi.y, pj.x, pj.y);
-            grad.addColorStop(0, pi.color.replace("0.85", (alpha * 0.45).toString()));
-            grad.addColorStop(1, pj.color.replace("0.85", (alpha * 0.45).toString()));
+            grad.addColorStop(0, pi.color.replace("0.95", (alpha * 0.55).toString()));
+            grad.addColorStop(0.5, `rgba(255, 255, 255, ${alpha * 0.3})`);
+            grad.addColorStop(1, pj.color.replace("0.95", (alpha * 0.55).toString()));
 
             ctx.strokeStyle = grad;
+            ctx.shadowBlur = 5;
+            ctx.shadowColor = pi.color;
             ctx.beginPath();
             ctx.moveTo(pi.x, pi.y);
             ctx.lineTo(pj.x, pj.y);
             ctx.stroke();
+            ctx.shadowBlur = 0;
           }
         }
 
-        // Proximity connects to cursor
+        // Proximity connects to cursor with luxury effect
         if (mouse.x !== -1000) {
           const dx = pi.x - mouse.x;
           const dy = pi.y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < mouse.radius) {
             const alpha = (mouse.radius - dist) / mouse.radius;
-            ctx.strokeStyle = `rgba(6, 182, 212, ${alpha * 0.35})`;
+            const grad = ctx.createLinearGradient(pi.x, pi.y, mouse.x, mouse.y);
+            grad.addColorStop(0, pi.color.replace("0.95", (alpha * 0.6).toString()));
+            grad.addColorStop(1, `rgba(6, 182, 212, ${alpha * 0.5})`);
+            
+            ctx.strokeStyle = grad;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "rgba(6, 182, 212, 0.5)";
             ctx.beginPath();
             ctx.moveTo(pi.x, pi.y);
             ctx.lineTo(mouse.x, mouse.y);
             ctx.stroke();
+            ctx.shadowBlur = 0;
           }
         }
       }

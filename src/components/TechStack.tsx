@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { TECHNOLOGIES_DATA } from "../data";
 import { Brain, Cpu, Database, Eye, MessageSquare, Flame, Laptop, Layers, GitFork, Cloud, FileCode, Landmark } from "lucide-react";
@@ -44,6 +44,7 @@ export default function TechStack() {
   const filteredTechs = selectedCategory === "all"
     ? TECHNOLOGIES_DATA
     : TECHNOLOGIES_DATA.filter((tech) => tech.category === selectedCategory);
+
 
   return (
     <section id="stack" className="py-24 relative overflow-hidden font-sans">
@@ -93,70 +94,57 @@ export default function TechStack() {
         </div>
 
         {/* Dynamic Cards Grid */}
-        <motion.div
-          layout
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+        <div 
+          className="relative overflow-hidden pb-6 px-4"
         >
-          <AnimatePresence mode="popLayout">
-            {filteredTechs.map((tech) => {
-              const TechIcon = getTechIcon(tech.iconName);
-              return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.92 }}
-                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                  transition={{ duration: 0.3 }}
-                  key={tech.name}
-                  className="relative glass-panel rounded-xl p-5 border border-white/5 shadow-lg overflow-hidden group select-none cursor-pointer flex flex-col justify-between"
-                  style={{
-                    // Creates dynamic interactive drop reflection on mouse-hover config
-                    boxShadow: "0 10px 30px -15px rgba(0,0,0,0.5)"
-                  }}
-                >
-                  {/* Glowing background mesh spot */}
-                  <div
-                    className="absolute -top-12 -right-12 w-24 h-24 rounded-full blur-[35px] opacity-0 group-hover:opacity-40 transition-opacity duration-300"
-                    style={{ backgroundColor: tech.glowingColor }}
-                  />
-
-                  {/* Corner indicator */}
-                  <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-cyan-400/50 transition-colors" />
-
-                  {/* Tech custom symbol representation */}
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/5 bg-white/[0.02] mb-4 group-hover:border-cyan-400/20 transition-all duration-300"
+          <motion.div
+            className="flex gap-4"
+            animate={{ x: [0, -1000] }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            {[...filteredTechs, ...filteredTechs, ...filteredTechs].map((tech, index) => {
+                const TechIcon = getTechIcon(tech.iconName);
+                return (
+                  <motion.div
+                    key={`${tech.name}-${index}`}
+                    whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                    className="relative glass-panel rounded-xl p-4 border-2 shadow-lg overflow-hidden group select-none cursor-pointer flex flex-col items-center justify-center w-32 h-32 shrink-0"
                     style={{
-                      boxShadow: "inset 0 1px 3px rgba(255,255,255,0.05)"
+                      boxShadow: "0 10px 30px -15px rgba(0,0,0,0.5)",
+                      borderColor: tech.glowingColor ?? "#06b6d4"
                     }}
                   >
-                    <TechIcon
-                      className="w-5 h-5 text-slate-300 group-hover:scale-110 transition-transform duration-300"
-                      style={{ color: tech.glowingColor ?? "#06b6d4" }}
-                    />
-                  </div>
+                    {/* Tech custom symbol representation */}
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/5 bg-white/[0.02] mb-2"
+                      style={{
+                        boxShadow: "inset 0 1px 3px rgba(255,255,255,0.05)"
+                      }}
+                    >
+                      <TechIcon
+                        className="w-5 h-5 text-slate-300"
+                        style={{ color: tech.glowingColor ?? "#06b6d4" }}
+                      />
+                    </div>
 
-                  {/* Tech labels */}
-                  <div>
-                    <h3 className="font-display font-bold text-xs sm:text-sm text-white line-clamp-1">
-                      {tech.name}
-                    </h3>
-                    <p className="text-[10px] font-mono tracking-wider text-slate-500 uppercase mt-0.5">
-                      {tech.category}
-                    </p>
-                  </div>
-
-                  {/* Glowing bottom line accent */}
-                  <div
-                    className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full transition-all duration-500 ease-out"
-                    style={{ backgroundColor: tech.glowingColor }}
-                  />
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
+                    {/* Tech labels */}
+                    <div className="text-center">
+                      <h3 className="font-display font-bold text-xs text-white line-clamp-1">
+                        {tech.name}
+                      </h3>
+                      <p className="text-[8px] font-mono tracking-wider text-slate-500 uppercase mt-0.5">
+                        {tech.category}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

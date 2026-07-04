@@ -27,6 +27,17 @@ export default function ChatWidget() {
   const [hasAutoOpened, setHasAutoOpened] = useState(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  // Monitor screen width for mobile vs desktop layouts
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 640);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   
   const chatScrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -142,7 +153,7 @@ export default function ChatWidget() {
 
   return (
     <motion.div
-      drag
+      drag={isDesktop && !isOpen}
       dragListener={false}
       dragControls={dragControls}
       dragMomentum={false}
@@ -153,7 +164,8 @@ export default function ChatWidget() {
         top: -window.innerHeight + 470,
         bottom: 24
       }}
-      className="fixed bottom-6 right-6 z-[999] select-none font-sans flex flex-col items-end touch-none"
+      className={`fixed z-[999] select-none font-sans flex flex-col items-end justify-end inset-0 w-full h-[100dvh] pointer-events-none sm:inset-auto sm:bottom-6 sm:right-6 sm:w-auto sm:h-auto sm:pointer-events-auto ${!isOpen ? "touch-none" : ""}`}
+      style={isOpen && !isDesktop ? { transform: "none" } : undefined}
     >
       {/* Notification Banner near chatbot */}
       <AnimatePresence>
@@ -176,11 +188,11 @@ export default function ChatWidget() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 35 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 35 }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="w-[85vw] sm:w-[330px] h-[450px] glass-crystal-panel rounded-2xl flex flex-col justify-between overflow-hidden mb-4 relative z-[999]"
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: "spring", duration: 0.4 }}
+            className="w-full h-full sm:w-[330px] sm:h-[450px] glass-crystal-panel sm:rounded-2xl rounded-none flex flex-col justify-between overflow-hidden sm:mb-4 relative z-[999] bg-slate-950/95 backdrop-blur-2xl sm:bg-transparent sm:backdrop-blur-none pointer-events-auto"
           >
             {/* Animated Liquid Crystal Background Blobs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 rounded-2xl">
@@ -334,7 +346,8 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       {/* 2. Floating robotic core toggle circle trigger & Label */}
-      <div className="flex flex-col items-center gap-1.5 mt-2 z-[999]">
+      {(!isOpen || isDesktop) && (
+        <div className="flex flex-col items-center gap-1.5 mt-2 z-[999] pointer-events-auto">
         <motion.button
           onClick={() => {
             handleChatbotClick();
@@ -405,6 +418,7 @@ export default function ChatWidget() {
           AURA by Waqar
         </span>
       </div>
+      )}
     </motion.div>
   );
 }
