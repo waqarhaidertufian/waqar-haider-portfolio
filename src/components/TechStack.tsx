@@ -40,6 +40,23 @@ function getTechIcon(iconName: string) {
 
 export default function TechStack() {
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_MAP>("all");
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollDistance, setScrollDistance] = useState(1000);
+
+  // Calculate scroll distance based on content width
+  useEffect(() => {
+    const calculateScrollDistance = () => {
+      if (scrollContainerRef.current) {
+        const containerWidth = scrollContainerRef.current.offsetWidth;
+        // Set scroll distance to 2x container width for smooth infinite loop
+        setScrollDistance(containerWidth * 2);
+      }
+    };
+
+    calculateScrollDistance();
+    window.addEventListener('resize', calculateScrollDistance);
+    return () => window.removeEventListener('resize', calculateScrollDistance);
+  }, [selectedCategory]);
 
   const filteredTechs = selectedCategory === "all"
     ? TECHNOLOGIES_DATA
@@ -95,11 +112,12 @@ export default function TechStack() {
 
         {/* Dynamic Cards Grid */}
         <div 
+          ref={scrollContainerRef}
           className="relative overflow-hidden pb-6 px-4"
         >
           <motion.div
             className="flex gap-4"
-            animate={{ x: [0, -1000] }}
+            animate={{ x: [0, -scrollDistance] }}
             transition={{
               duration: 20,
               repeat: Infinity,
