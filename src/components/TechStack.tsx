@@ -99,7 +99,7 @@ export default function TechStack() {
         >
           <motion.div
             className="flex gap-4"
-            animate={{ x: [0, -1000] }}
+            animate={{ x: [0, -3000] }}
             transition={{
               duration: 20,
               repeat: Infinity,
