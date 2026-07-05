@@ -209,10 +209,10 @@ export default function Hero() {
     };
   }, []);
 
-  // 2. Animated Stats Counting Effects
+  // 2. Animated Stats Counting Effects with Premium Easing
   useEffect(() => {
-    const duration = 2000; // 2 seconds counting
-    const steps = 50;
+    const duration = 3500; // 3.5 seconds for slow premium feel
+    const steps = 100;
     const intervalTime = duration / steps;
     let stepCount = 0;
 
@@ -222,7 +222,10 @@ export default function Hero() {
 
       ACHIEVEMENTS_DATA.forEach((item) => {
         const target = item.value;
-        const currentVal = Math.floor((target / steps) * stepCount);
+        // Easing function for smooth premium animation
+        const progress = stepCount / steps;
+        const easedProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease out
+        const currentVal = Math.floor(target * easedProgress);
         nextCounts[item.id] = Math.min(currentVal, target);
       });
 
