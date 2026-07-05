@@ -40,32 +40,10 @@ function getTechIcon(iconName: string) {
 
 export default function TechStack() {
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_MAP>("all");
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollDistance, setScrollDistance] = useState(1000);
 
   const filteredTechs = selectedCategory === "all"
     ? TECHNOLOGIES_DATA
     : TECHNOLOGIES_DATA.filter((tech) => tech.category === selectedCategory);
-
-  // Calculate scroll distance based on content width
-  useEffect(() => {
-    const calculateScrollDistance = () => {
-      if (scrollContainerRef.current) {
-        const cardWidth = 136; // w-32 (128px) + gap-4 (16px)
-        const totalCardsWidth = filteredTechs.length * cardWidth;
-        // Use 50x total cards width for very long smooth scroll before reset
-        setScrollDistance(totalCardsWidth * 50);
-      }
-    };
-
-    // Delay calculation to ensure DOM is rendered
-    const timeoutId = setTimeout(calculateScrollDistance, 100);
-    window.addEventListener('resize', calculateScrollDistance);
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('resize', calculateScrollDistance);
-    };
-  }, [selectedCategory, filteredTechs]);
 
 
   return (
@@ -117,12 +95,11 @@ export default function TechStack() {
 
         {/* Dynamic Cards Grid */}
         <div 
-          ref={scrollContainerRef}
           className="relative overflow-hidden pb-6 px-4"
         >
           <motion.div
             className="flex gap-4"
-            animate={{ x: [0, -scrollDistance] }}
+            animate={{ x: [0, -1000] }}
             transition={{
               duration: 20,
               repeat: Infinity,
