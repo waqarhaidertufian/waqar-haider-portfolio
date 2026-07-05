@@ -112,6 +112,10 @@ export default function TechStack() {
               repeat: Infinity,
               ease: "linear"
             }}
+            style={{ 
+              willChange: "transform",
+              transform: "translate3d(0, 0, 0)"
+            }}
           >
             {[...filteredTechs, ...filteredTechs, ...filteredTechs].map((tech, index) => {
                 const TechIcon = getTechIcon(tech.iconName);
