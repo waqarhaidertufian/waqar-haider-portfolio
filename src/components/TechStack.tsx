@@ -43,24 +43,30 @@ export default function TechStack() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollDistance, setScrollDistance] = useState(1000);
 
+  const filteredTechs = selectedCategory === "all"
+    ? TECHNOLOGIES_DATA
+    : TECHNOLOGIES_DATA.filter((tech) => tech.category === selectedCategory);
+
   // Calculate scroll distance based on content width
   useEffect(() => {
     const calculateScrollDistance = () => {
       if (scrollContainerRef.current) {
         const containerWidth = scrollContainerRef.current.offsetWidth;
-        // Set scroll distance to 2x container width for smooth infinite loop
-        setScrollDistance(containerWidth * 2);
+        const cardWidth = 136; // w-32 (128px) + gap-4 (16px)
+        const totalCardsWidth = filteredTechs.length * cardWidth;
+        // Use the larger of container width or total cards width for seamless loop
+        setScrollDistance(Math.max(containerWidth, totalCardsWidth));
       }
     };
 
-    calculateScrollDistance();
+    // Delay calculation to ensure DOM is rendered
+    const timeoutId = setTimeout(calculateScrollDistance, 100);
     window.addEventListener('resize', calculateScrollDistance);
-    return () => window.removeEventListener('resize', calculateScrollDistance);
-  }, [selectedCategory]);
-
-  const filteredTechs = selectedCategory === "all"
-    ? TECHNOLOGIES_DATA
-    : TECHNOLOGIES_DATA.filter((tech) => tech.category === selectedCategory);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', calculateScrollDistance);
+    };
+  }, [selectedCategory, filteredTechs]);
 
 
   return (
