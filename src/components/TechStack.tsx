@@ -51,11 +51,10 @@ export default function TechStack() {
   useEffect(() => {
     const calculateScrollDistance = () => {
       if (scrollContainerRef.current) {
-        const containerWidth = scrollContainerRef.current.offsetWidth;
         const cardWidth = 136; // w-32 (128px) + gap-4 (16px)
         const totalCardsWidth = filteredTechs.length * cardWidth;
-        // Use the larger of container width or total cards width for seamless loop
-        setScrollDistance(Math.max(containerWidth, totalCardsWidth));
+        // Use 50x total cards width for very long smooth scroll before reset
+        setScrollDistance(totalCardsWidth * 50);
       }
     };
 
