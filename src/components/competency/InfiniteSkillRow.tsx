@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import SkillCard from "./SkillCard";
 import { Skill } from "../../data/skills";
@@ -10,6 +10,8 @@ interface InfiniteSkillRowProps {
 export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
   const [isPaused, setIsPaused] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [scrollDistance, setScrollDistance] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   // Detect mobile screen size
   useEffect(() => {
@@ -22,6 +24,16 @@ export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
     
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Calculate scroll distance based on actual content width
+  useEffect(() => {
+    if (trackRef.current) {
+      const trackWidth = trackRef.current.scrollWidth;
+      // Scroll distance should be the width of one complete set of skills
+      // With 8 duplicates, one set is 1/8 of the total width
+      setScrollDistance(trackWidth / 8);
+    }
+  }, [skills]);
 
   // Desktop: 8s, Mobile: 0.53s (5x faster than previous mobile speed)
   const duration = isMobile ? 0.53 : 8;
@@ -47,9 +59,10 @@ export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
       onTouchEnd={handleResume}
     >
       <motion.div
+        ref={trackRef}
         className="flex gap-4"
         animate={{
-          x: isPaused ? 0 : ["0%", "-12.5%"]
+          x: isPaused ? 0 : [0, -scrollDistance]
         }}
         transition={{
           x: {
