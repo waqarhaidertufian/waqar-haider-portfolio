@@ -141,10 +141,30 @@ export default function About() {
                 <h3 className="font-display font-bold text-lg text-white">Waqar Haider</h3>
                 <p className="text-xs font-mono text-cyan-400 mt-1 tracking-wider uppercase">Faisalabad, Pakistan</p>
                 
-                {/* Physical Location Pin */}
-                <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-500 uppercase tracking-widest mt-3">
-                  <MapPin className="w-3.5 h-3.5 text-purple-400" />
-                  <span>31.4504° N, 73.1350° E</span>
+                {/* Hiring Status */}
+                <style>{`
+                  @keyframes statusPulse {
+                    0%, 100% {
+                      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+                      transform: scale(1);
+                    }
+                    50% {
+                      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+                      transform: scale(1.1);
+                    }
+                  }
+                  .status-dot-pulse {
+                    animation: statusPulse 2.5s ease-in-out infinite;
+                  }
+                `}</style>
+                <div className="flex items-center justify-center gap-2 text-[10px] text-slate-400 uppercase tracking-widest mt-3 group cursor-default">
+                  <span className="relative w-2 h-2">
+                    <span className="absolute inset-0 bg-emerald-400 rounded-full status-dot-pulse" />
+                    <span className="absolute inset-0 bg-emerald-400 rounded-full" />
+                  </span>
+                  <span className="group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] transition-all duration-200">
+                    AVAILABLE FOR HIRE
+                  </span>
                 </div>
               </div>
 
