@@ -77,7 +77,7 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
             onClick={(e) => handleClickNav(e, "#home")}
             className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 border border-white/[0.08] flex items-center justify-center transition-all duration-500 group-hover:border-cyan-500/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] overflow-hidden">
+            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 border border-cyan-400/20 flex items-center justify-center transition-all duration-500 group-hover:border-cyan-500/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)]">
               <span className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-purple-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <svg 
                 viewBox="0 0 24 24" 
