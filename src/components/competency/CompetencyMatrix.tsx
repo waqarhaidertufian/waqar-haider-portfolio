@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import CategoryTabs from "./CategoryTabs";
 import InfiniteSkillRow from "./InfiniteSkillRow";
 import { SKILLS_DATA, CATEGORY_MAP, Category } from "../../data/skills";
@@ -77,19 +77,10 @@ export default function CompetencyMatrix() {
           onCategoryChange={setSelectedCategory}
         />
 
-        {/* Skills Row with fade/blur transition */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedCategory}
-            initial={{ opacity: 0, filter: "blur(10px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, filter: "blur(10px)" }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative overflow-hidden pb-6 px-4"
-          >
-            <InfiniteSkillRow skills={filteredSkills} />
-          </motion.div>
-        </AnimatePresence>
+        {/* Skills Grid */}
+        <div className="relative pb-6 px-4">
+          <InfiniteSkillRow skills={filteredSkills} />
+        </div>
       </div>
     </section>
   );
