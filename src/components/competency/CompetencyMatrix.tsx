@@ -10,7 +10,8 @@ export default function CompetencyMatrix() {
   // Filter skills based on selected category
   const filteredSkills = useMemo(() => {
     if (selectedCategory === "all") {
-      return SKILLS_DATA;
+      // Exclude linguistic category (LLM providers) from Full Stack Matrix
+      return SKILLS_DATA.filter(skill => skill.category !== "linguistic");
     }
     
     const categoryMap: Record<string, string> = {
