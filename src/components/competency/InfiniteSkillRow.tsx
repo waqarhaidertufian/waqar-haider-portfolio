@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, useAnimation } from "motion/react";
+import { motion } from "motion/react";
 import SkillCard from "./SkillCard";
 import { Skill } from "../../data/skills";
 
@@ -9,52 +9,43 @@ interface InfiniteSkillRowProps {
 
 export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
   const [isPaused, setIsPaused] = useState(false);
-  const controls = useAnimation();
 
   // Duplicate skills for seamless infinite loop
   // We need enough duplicates to fill the screen and create smooth transitions
   const duplicatedSkills = [...skills, ...skills, ...skills, ...skills];
 
-  const handleMouseEnter = () => {
+  const handlePause = () => {
     setIsPaused(true);
-    controls.stop();
   };
 
-  const handleMouseLeave = () => {
+  const handleResume = () => {
     setIsPaused(false);
-    controls.start({
-      x: ["0%", "-25%"],
-      transition: {
-        duration: 30,
-        repeat: Infinity,
-        ease: "linear",
-        repeatType: "loop"
-      }
-    });
   };
 
   return (
     <div 
       className="relative overflow-hidden w-full"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={handlePause}
+      onMouseLeave={handleResume}
+      onTouchStart={handlePause}
+      onTouchEnd={handleResume}
     >
       <motion.div
         className="flex gap-4"
-        initial={{ x: 0 }}
-        animate={controls}
-        onAnimationComplete={() => {
-          if (!isPaused) {
-            controls.start({
-              x: ["0%", "-25%"],
-              transition: {
-                duration: 30,
-                repeat: Infinity,
-                ease: "linear",
-                repeatType: "loop"
-              }
-            });
+        animate={{
+          x: isPaused ? 0 : ["0%", "-25%"]
+        }}
+        transition={{
+          x: {
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+            repeatType: "loop"
           }
+        }}
+        style={{
+          willChange: "transform",
+          transform: "translate3d(0, 0, 0)"
         }}
       >
         {duplicatedSkills.map((skill, index) => (
