@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import SkillCard from "./SkillCard";
 import { Skill } from "../../data/skills";
@@ -9,6 +9,22 @@ interface InfiniteSkillRowProps {
 
 export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
   const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Desktop: 8s, Mobile: 2.67s (3x faster)
+  const duration = isMobile ? 2.67 : 8;
 
   // Duplicate skills for seamless infinite loop
   // We need enough duplicates to fill the screen and create smooth transitions
@@ -37,7 +53,7 @@ export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
         }}
         transition={{
           x: {
-            duration: 8,
+            duration,
             repeat: Infinity,
             ease: "linear",
             repeatType: "loop"
