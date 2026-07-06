@@ -93,45 +93,55 @@ export default function TechStack() {
           })}
         </div>
 
-        {/* Static Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 pb-6 px-4">
-          {filteredTechs.map((tech, index) => {
-            const TechIcon = getTechIcon(tech.iconName);
-            return (
-              <motion.div
-                key={`${tech.name}-${index}`}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="relative glass-panel rounded-xl p-4 border-2 shadow-lg overflow-hidden group select-none cursor-pointer flex flex-col items-center justify-center h-32"
-                style={{
-                  boxShadow: "0 10px 30px -15px rgba(0,0,0,0.5)",
-                  borderColor: tech.glowingColor ?? "#06b6d4"
-                }}
-              >
-                {/* Tech custom symbol representation */}
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/5 bg-white/[0.02] mb-2"
+        {/* Animated Cards Grid - Left to Right Scroll */}
+        <div className="relative overflow-hidden pb-6 px-4">
+          <motion.div
+            className="flex gap-4"
+            animate={{ x: [0, 5000] }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          >
+            {[...filteredTechs, ...filteredTechs, ...filteredTechs].map((tech, index) => {
+              const TechIcon = getTechIcon(tech.iconName);
+              return (
+                <motion.div
+                  key={`${tech.name}-${index}`}
+                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                  className="relative glass-panel rounded-xl p-4 border-2 shadow-lg overflow-hidden group select-none cursor-pointer flex flex-col items-center justify-center w-32 h-32 shrink-0"
                   style={{
-                    boxShadow: "inset 0 1px 3px rgba(255,255,255,0.05)"
+                    boxShadow: "0 10px 30px -15px rgba(0,0,0,0.5)",
+                    borderColor: tech.glowingColor ?? "#06b6d4"
                   }}
                 >
-                  <TechIcon
-                    className="w-5 h-5 text-slate-300"
-                    style={{ color: tech.glowingColor ?? "#06b6d4" }}
-                  />
-                </div>
+                  {/* Tech custom symbol representation */}
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/5 bg-white/[0.02] mb-2"
+                    style={{
+                      boxShadow: "inset 0 1px 3px rgba(255,255,255,0.05)"
+                    }}
+                  >
+                    <TechIcon
+                      className="w-5 h-5 text-slate-300"
+                      style={{ color: tech.glowingColor ?? "#06b6d4" }}
+                    />
+                  </div>
 
-                {/* Tech labels */}
-                <div className="text-center">
-                  <h3 className="font-display font-bold text-xs text-white line-clamp-1">
-                    {tech.name}
-                  </h3>
-                  <p className="text-[8px] font-mono tracking-wider text-slate-500 uppercase mt-0.5">
-                    {tech.category}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          })}
+                  {/* Tech labels */}
+                  <div className="text-center">
+                    <h3 className="font-display font-bold text-xs text-white line-clamp-1">
+                      {tech.name}
+                    </h3>
+                    <p className="text-[8px] font-mono tracking-wider text-slate-500 uppercase mt-0.5">
+                      {tech.category}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </div>
     </section>
