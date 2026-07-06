@@ -40,16 +40,10 @@ function getTechIcon(iconName: string) {
 
 export default function TechStack() {
   const [selectedCategory, setSelectedCategory] = useState<keyof typeof CATEGORY_MAP>("all");
-  const [animationKey, setAnimationKey] = useState(0);
 
   const filteredTechs = selectedCategory === "all"
     ? TECHNOLOGIES_DATA
     : TECHNOLOGIES_DATA.filter((tech) => tech.category === selectedCategory);
-
-  // Reset animation when category changes
-  useEffect(() => {
-    setAnimationKey(prev => prev + 1);
-  }, [selectedCategory]);
 
 
   return (
@@ -102,11 +96,10 @@ export default function TechStack() {
         {/* Animated Cards Grid - Left to Right Scroll */}
         <div className="relative overflow-hidden pb-6 px-4">
           <motion.div
-            key={animationKey}
             className="flex gap-4"
-            animate={{ x: [-5000, 0] }}
+            animate={{ x: [0, 2000] }}
             transition={{
-              duration: 25,
+              duration: 20,
               repeat: Infinity,
               ease: "linear"
             }}
