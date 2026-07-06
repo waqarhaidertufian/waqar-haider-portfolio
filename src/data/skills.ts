@@ -45,11 +45,11 @@ export const SKILLS_DATA: Skill[] = [
   { name: "Firebase", category: "cloud", icon: Flame, color: "#ffca28" },
   { name: "Linux", category: "cloud", icon: Terminal, color: "#f97316" },
   
-  // AI Frameworks & Tools
-  { name: "TensorFlow", category: "ai", icon: Cpu, color: "#f97316" },
-  { name: "PyTorch", category: "ai", icon: Flame, color: "#ef4444" },
-  { name: "Scikit-Learn", category: "ai", icon: Layers, color: "#3b82f6" },
-  { name: "OpenCV", category: "ai", icon: Eye, color: "#06b6d4" },
+  // Deep Learning Frameworks & Tools
+  { name: "TensorFlow", category: "deepLearning", icon: Cpu, color: "#f97316" },
+  { name: "PyTorch", category: "deepLearning", icon: Flame, color: "#ef4444" },
+  { name: "Scikit-Learn", category: "deepLearning", icon: Layers, color: "#3b82f6" },
+  { name: "OpenCV", category: "deepLearning", icon: Eye, color: "#06b6d4" },
   
   // LLM Providers - Linguistic Engines category only
   { name: "OpenAI", category: "linguistic", icon: Brain, color: "#10b981" },

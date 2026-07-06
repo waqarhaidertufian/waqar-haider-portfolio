@@ -16,7 +16,7 @@ export default function CompetencyMatrix() {
     
     const categoryMap: Record<string, string> = {
       ai: "ai",
-      deepLearning: "ai",
+      deepLearning: "deepLearning",
       frameworks: "frameworks",
       cloud: "cloud",
       linguistic: "linguistic",
