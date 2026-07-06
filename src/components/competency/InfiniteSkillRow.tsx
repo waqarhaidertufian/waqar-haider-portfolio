@@ -37,7 +37,7 @@ export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
         }}
         transition={{
           x: {
-            duration: 30,
+            duration: 18,
             repeat: Infinity,
             ease: "linear",
             repeatType: "loop"
