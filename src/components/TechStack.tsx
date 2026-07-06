@@ -52,32 +52,67 @@ export default function TechStack() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
-        <div className="flex flex-col items-center text-center mb-16 md:mb-20">
-          <span className="text-xs font-mono tracking-[0.3em] text-cyan-400 uppercase mb-2">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center text-center mb-16 md:mb-20"
+        >
+          <motion.span
+            initial={{ opacity: 0, letterSpacing: "0.3em" }}
+            animate={{ opacity: 1, letterSpacing: "0.3em" }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="text-xs font-mono tracking-[0.3em] text-cyan-400 uppercase mb-2"
+          >
             CHAPTER 02 // INTELLIGENCE STACK
-          </span>
-          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight">
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight"
+          >
             High Performance Core <span className="text-gradient-cyan-purple">Competency Matrix</span>
-          </h2>
-          <div className="w-12 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full mt-4" />
-          <p className="text-slate-400 text-xs md:text-sm max-w-2xl mt-4">
+          </motion.h2>
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: "3rem" }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full mt-4"
+          />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-slate-400 text-xs md:text-sm max-w-2xl mt-4"
+          >
             Filter through the structural environments Waqar Haider utilizes daily to build deep pipelines and reactive consumer software.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Tab Filters */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-          {Object.entries(CATEGORY_MAP).map(([key, config]) => {
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center justify-center gap-2 mb-12"
+        >
+          {Object.entries(CATEGORY_MAP).map(([key, config], index) => {
             const isSelected = selectedCategory === key;
             const Icon = config.icon;
             return (
-              <button
+              <motion.button
                 key={key}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.8 + index * 0.05, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => setSelectedCategory(key as keyof typeof CATEGORY_MAP)}
                 className={`relative px-4 py-2 rounded-full font-sans font-medium text-xs tracking-wider uppercase transition-colors flex items-center gap-2 ${
                   isSelected ? "text-cyan-400 border-cyan-400/20" : "text-slate-400 hover:text-white"
                 }`}
                 aria-label={`Show ${config.label}`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {isSelected && (
                   <motion.span
@@ -88,13 +123,18 @@ export default function TechStack() {
                 )}
                 <Icon className="w-3.5 h-3.5 shrink-0" />
                 <span className="relative z-10">{config.label}</span>
-              </button>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Animated Cards Grid - Left to Right Scroll */}
-        <div className="relative overflow-hidden pb-6 px-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative overflow-hidden pb-6 px-4"
+        >
           <motion.div
             className="flex gap-4"
             animate={{ x: [0, 2000] }}
@@ -109,7 +149,15 @@ export default function TechStack() {
               return (
                 <motion.div
                   key={`${tech.name}-${index}`}
-                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.1 + (index % filteredTechs.length) * 0.03, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ 
+                    y: -12, 
+                    scale: 1.05,
+                    boxShadow: `0 20px 40px -15px ${tech.glowingColor ?? "#06b6d4"}40`,
+                    borderColor: tech.glowingColor ?? "#06b6d4"
+                  }}
                   className="relative glass-panel rounded-xl p-4 border-2 shadow-lg overflow-hidden group select-none cursor-pointer flex flex-col items-center justify-center w-32 h-32 shrink-0"
                   style={{
                     boxShadow: "0 10px 30px -15px rgba(0,0,0,0.5)",
@@ -117,7 +165,9 @@ export default function TechStack() {
                   }}
                 >
                   {/* Tech custom symbol representation */}
-                  <div
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     className="w-10 h-10 rounded-lg flex items-center justify-center border border-white/5 bg-white/[0.02] mb-2"
                     style={{
                       boxShadow: "inset 0 1px 3px rgba(255,255,255,0.05)"
@@ -127,7 +177,7 @@ export default function TechStack() {
                       className="w-5 h-5 text-slate-300"
                       style={{ color: tech.glowingColor ?? "#06b6d4" }}
                     />
-                  </div>
+                  </motion.div>
 
                   {/* Tech labels */}
                   <div className="text-center">
@@ -142,7 +192,7 @@ export default function TechStack() {
               );
             })}
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
