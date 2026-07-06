@@ -23,12 +23,12 @@ export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Desktop: 8s, Mobile: 2.67s (3x faster)
-  const duration = isMobile ? 2.67 : 8;
+  // Desktop: 8s, Mobile: 0.53s (5x faster than previous mobile speed)
+  const duration = isMobile ? 0.53 : 8;
 
   // Duplicate skills for seamless infinite loop
-  // We need enough duplicates to fill the screen and create smooth transitions
-  const duplicatedSkills = [...skills, ...skills, ...skills, ...skills];
+  // Use more duplicates to ensure smooth scrolling in portrait mode
+  const duplicatedSkills = [...skills, ...skills, ...skills, ...skills, ...skills, ...skills, ...skills, ...skills];
 
   const handlePause = () => {
     setIsPaused(true);
@@ -49,7 +49,7 @@ export default function InfiniteSkillRow({ skills }: InfiniteSkillRowProps) {
       <motion.div
         className="flex gap-4"
         animate={{
-          x: isPaused ? 0 : ["0%", "-25%"]
+          x: isPaused ? 0 : ["0%", "-12.5%"]
         }}
         transition={{
           x: {
