@@ -77,15 +77,33 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
             onClick={(e) => handleClickNav(e, "#home")}
             className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 border border-cyan-400/20 flex items-center justify-center transition-all duration-500 group-hover:border-cyan-500/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 border border-cyan-400/20 flex items-center justify-center transition-all duration-500 group-hover:border-cyan-500/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] group-hover:scale-105 overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)]">
               <span className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-purple-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <style>{`
+                @keyframes neonPulse {
+                  0%, 100% {
+                    filter: drop-shadow(0 0 2px rgba(6, 182, 212, 0.4)) drop-shadow(0 0 4px rgba(139, 92, 246, 0.3));
+                    opacity: 1;
+                  }
+                  50% {
+                    filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.8)) drop-shadow(0 0 12px rgba(139, 92, 246, 0.6)) drop-shadow(0 0 18px rgba(16, 185, 129, 0.4));
+                    opacity: 1;
+                  }
+                }
+                .logo-w-pulse {
+                  animation: neonPulse 2s ease-in-out infinite;
+                }
+                .logo-border-pulse {
+                  animation: neonPulse 2s ease-in-out infinite;
+                }
+              `}</style>
               <svg 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 strokeWidth="1.2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round" 
-                className="relative z-10 w-5.5 h-5.5 group-hover:scale-110 transition-transform duration-300"
+                className="relative z-10 w-5.5 h-5.5"
               >
                 <defs>
                   <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -95,20 +113,20 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
                   </linearGradient>
                 </defs>
                 {/* Outer W */}
-                <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#logoGrad)" />
+                <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#logoGrad)" className="logo-w-pulse" />
                 {/* Inner Parallel W */}
-                <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" stroke="url(#logoGrad)" />
+                <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" stroke="url(#logoGrad)" className="logo-w-pulse" />
                 {/* Top left serif */}
-                <path d="M 1.5 6 H 4.5" stroke="url(#logoGrad)" />
+                <path d="M 1.5 6 H 4.5" stroke="url(#logoGrad)" className="logo-w-pulse" />
                 {/* Top right serif */}
-                <path d="M 17.8 6 H 20.8" stroke="url(#logoGrad)" />
+                <path d="M 17.8 6 H 20.8" stroke="url(#logoGrad)" className="logo-w-pulse" />
                 {/* Middle peak serif */}
-                <path d="M 10.2 9 H 12.2" stroke="url(#logoGrad)" />
+                <path d="M 10.2 9 H 12.2" stroke="url(#logoGrad)" className="logo-w-pulse" />
                 {/* Bottom left serif */}
-                <path d="M 6 18 H 9" stroke="url(#logoGrad)" />
+                <path d="M 6 18 H 9" stroke="url(#logoGrad)" className="logo-w-pulse" />
                 {/* Bottom right serif */}
-                <path d="M 13.3 18 H 16.3" stroke="url(#logoGrad)" />
-                {/* Brand dot */}
+                <path d="M 13.3 18 H 16.3" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                {/* Brand dot - static, no animation */}
                 <circle cx="21.2" cy="17.2" r="1.1" fill="#06b6d4" stroke="none" />
               </svg>
             </div>
