@@ -4,7 +4,7 @@ import CustomCursor from "./components/CustomCursor";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import TechStack from "./components/TechStack";
+import CompetencyMatrix from "./components/competency/CompetencyMatrix";
 import Projects from "./components/Projects";
 import Research from "./components/Research";
 import Timeline from "./components/Timeline";
@@ -95,7 +95,7 @@ export default function App() {
             <About />
 
             {/* Section 3: Tech Matrix stack filter */}
-            <TechStack />
+            <CompetencyMatrix />
 
             {/* Section 4: Projects cards & case study Modal */}
             <Projects />
