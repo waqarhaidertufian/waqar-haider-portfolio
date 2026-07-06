@@ -97,7 +97,7 @@ export default function TechStack() {
         <div className="relative overflow-hidden pb-6 px-4">
           <motion.div
             className="flex gap-4"
-            animate={{ x: [0, 5000] }}
+            animate={{ x: [-5000, 0] }}
             transition={{
               duration: 25,
               repeat: Infinity,
