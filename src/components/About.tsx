@@ -133,7 +133,6 @@ export default function About() {
 
                 {/* Satellite glowing entities orbiting */}
                 <div className="absolute top-3 right-6 w-3 h-3 rounded-full bg-purple-500 animate-ping" />
-                <div className="absolute bottom-4 left-4 w-2 h-2 rounded-full bg-emerald-400" />
               </div>
 
               {/* Name Details card footer */}
