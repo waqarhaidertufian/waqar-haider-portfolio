@@ -114,7 +114,7 @@ export default function About() {
               <div className="absolute top-4 left-4 font-mono text-[9px] text-slate-500 tracking-wider">
                 PORTRAIT_SCAN_001
               </div>
-              <div className="absolute top-12 right-6 font-mono text-[9px] text-cyan-400 tracking-widest flex items-center gap-1.5 animate-pulse">
+              <div className="absolute top-8 right-6 font-mono text-[9px] text-cyan-400 tracking-widest flex items-center gap-1.5 animate-pulse">
                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block" />
                 VERIFIED_AI_DEV
               </div>
