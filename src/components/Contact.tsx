@@ -129,9 +129,9 @@ export default function Contact() {
                     </a>
                     <a
                       href="mailto:waqarhaidertufian@gmail.com"
-                      className="w-8 h-8 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500 hover:text-white transition-all duration-300 shrink-0 flex items-center justify-center hover:shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                      className="text-purple-400/80 hover:text-purple-300 transition-all duration-300 shrink-0 flex items-center justify-center p-1 group-hover:translate-x-1"
                     >
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-5 h-5" />
                     </a>
                   </div>
 
@@ -163,9 +163,9 @@ export default function Contact() {
                       href="https://wa.me/923271086970"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-white transition-all duration-300 shrink-0 flex items-center justify-center hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                      className="text-emerald-400/80 hover:text-emerald-300 transition-all duration-300 shrink-0 flex items-center justify-center p-1 group-hover:translate-x-1"
                     >
-                      <ChevronRight className="w-4 h-4" />
+                      <ChevronRight className="w-5 h-5" />
                     </a>
                   </div>
                 </div>
