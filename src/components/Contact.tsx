@@ -110,16 +110,16 @@ export default function Contact() {
                   <div className="flex items-center justify-between gap-4 group w-full">
                     <a
                       href="mailto:waqarhaidertufian@gmail.com"
-                      className="flex items-start gap-4 flex-1"
+                      className="flex items-start gap-4 flex-1 min-w-0"
                     >
                       <div className="p-3 rounded-lg border border-purple-400/20 bg-purple-950/25 text-purple-400 shrink-0 luxury-glow-purple group-hover:scale-105 transition-transform duration-300">
                         <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
                           EMAIL RESPONSE HUB
                         </span>
-                        <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block">
+                        <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block break-all sm:break-normal">
                           waqarhaidertufian@gmail.com
                         </span>
                         <span className="text-xs font-mono text-slate-400 mt-0.5 block group-hover:text-slate-350 transition-colors">
@@ -141,12 +141,12 @@ export default function Contact() {
                       href="https://wa.me/923271086970"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-start gap-4 flex-1"
+                      className="flex items-start gap-4 flex-1 min-w-0"
                     >
                       <div className="p-3 rounded-lg border border-emerald-400/20 bg-emerald-950/25 text-emerald-400 shrink-0 luxury-glow-emerald group-hover:scale-105 transition-transform duration-300">
                         <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
                           WHATSAPP / VOICE DIRECT
                         </span>
