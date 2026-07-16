@@ -107,50 +107,67 @@ export default function Contact() {
                   </div>
 
                   {/* Mail Coordinate */}
-                  <a
-                    href="mailto:waqarhaidertufian@gmail.com"
-                    className="flex items-start gap-4 group"
-                  >
-                    <div className="p-3 rounded-lg border border-purple-400/20 bg-purple-950/25 text-purple-400 shrink-0 luxury-glow-purple group-hover:scale-105 transition-transform duration-300">
-                      <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                    </div>
-                    <div>
-                      <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
-                        EMAIL RESPONSE HUB
-                      </span>
-                      <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block">
-                        waqarhaidertufian@gmail.com
-                      </span>
-                      <span className="text-xs font-mono text-slate-400 mt-0.5 block group-hover:text-slate-350 transition-colors">
-                        Standard response SLA: Under 4 hours.
-                      </span>
-                    </div>
-                  </a>
+                  <div className="flex items-center justify-between gap-4 group w-full">
+                    <a
+                      href="mailto:waqarhaidertufian@gmail.com"
+                      className="flex items-start gap-4 flex-1"
+                    >
+                      <div className="p-3 rounded-lg border border-purple-400/20 bg-purple-950/25 text-purple-400 shrink-0 luxury-glow-purple group-hover:scale-105 transition-transform duration-300">
+                        <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
+                          EMAIL RESPONSE HUB
+                        </span>
+                        <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block">
+                          waqarhaidertufian@gmail.com
+                        </span>
+                        <span className="text-xs font-mono text-slate-400 mt-0.5 block group-hover:text-slate-350 transition-colors">
+                          Standard response SLA: Under 4 hours.
+                        </span>
+                      </div>
+                    </a>
+                    <a
+                      href="mailto:waqarhaidertufian@gmail.com"
+                      className="w-8 h-8 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500 hover:text-white transition-all duration-300 shrink-0 flex items-center justify-center hover:shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </a>
+                  </div>
 
                   {/* Phone / Whatsapp Coordinate */}
-                  <a
-                    href="https://wa.me/923271086970"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    referrerPolicy="no-referrer"
-                    className="flex items-start gap-4 group"
-                  >
-                    <div className="p-3 rounded-lg border border-emerald-400/20 bg-emerald-950/25 text-emerald-400 shrink-0 luxury-glow-emerald group-hover:scale-105 transition-transform duration-300">
-                      <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
-                    </div>
-                    <div>
-                      <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
-                        WHATSAPP / VOICE DIRECT
-                      </span>
-                      <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-emerald-400 transition-colors mt-0.5 block">
-                        +92 327 1086970
-                      </span>
-                      <span className="text-xs font-mono text-slate-400 mt-0.5 block font-bold text-emerald-450 flex items-center gap-1.5 group-hover:text-slate-350 transition-colors">
-                        <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-ping" />
-                        INSTANT CONNECT ACTIVE
-                      </span>
-                    </div>
-                  </a>
+                  <div className="flex items-center justify-between gap-4 group w-full">
+                    <a
+                      href="https://wa.me/923271086970"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 flex-1"
+                    >
+                      <div className="p-3 rounded-lg border border-emerald-400/20 bg-emerald-950/25 text-emerald-400 shrink-0 luxury-glow-emerald group-hover:scale-105 transition-transform duration-300">
+                        <MessageCircle className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+                      </div>
+                      <div>
+                        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
+                          WHATSAPP / VOICE DIRECT
+                        </span>
+                        <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-emerald-400 transition-colors mt-0.5 block">
+                          +92 327 1086970
+                        </span>
+                        <span className="text-xs font-mono text-slate-400 mt-0.5 block font-bold text-emerald-400 flex items-center gap-1.5 group-hover:text-slate-350 transition-colors">
+                          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full inline-block animate-ping" />
+                          INSTANT CONNECT ACTIVE
+                        </span>
+                      </div>
+                    </a>
+                    <a
+                      href="https://wa.me/923271086970"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-white transition-all duration-300 shrink-0 flex items-center justify-center hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
 

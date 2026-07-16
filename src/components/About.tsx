@@ -133,6 +133,28 @@ export default function About() {
 
                 {/* Satellite glowing entities orbiting */}
                 <div className="absolute top-3 right-6 w-3 h-3 rounded-full bg-purple-500 animate-ping" />
+
+                {/* W Logo with blinking animation */}
+                <div className="absolute bottom-4 left-4 w-8 h-8 flex items-center justify-center">
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    strokeWidth="1.5" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    className="w-6 h-6 animate-pulse"
+                  >
+                    <defs>
+                      <linearGradient id="wLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#06b6d4" />
+                        <stop offset="50%" stopColor="#8b5cf6" />
+                        <stop offset="100%" stopColor="#10b981" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#wLogoGrad)" />
+                    <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" stroke="url(#wLogoGrad)" />
+                  </svg>
+                </div>
               </div>
 
               {/* Name Details card footer */}
