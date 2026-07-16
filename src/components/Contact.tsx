@@ -119,7 +119,7 @@ export default function Contact() {
                         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
                           EMAIL RESPONSE HUB
                         </span>
-                        <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block break-all sm:break-normal">
+                        <span className="text-[11px] sm:text-sm font-sans font-bold text-slate-200 group-hover:text-cyan-400 transition-colors mt-0.5 block whitespace-nowrap">
                           waqarhaidertufian@gmail.com
                         </span>
                         <span className="text-xs font-mono text-slate-400 mt-0.5 block group-hover:text-slate-350 transition-colors">
@@ -150,7 +150,7 @@ export default function Contact() {
                         <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block">
                           WHATSAPP / VOICE DIRECT
                         </span>
-                        <span className="text-sm font-sans font-bold text-slate-200 group-hover:text-emerald-400 transition-colors mt-0.5 block">
+                        <span className="text-xs sm:text-sm font-sans font-bold text-slate-200 group-hover:text-emerald-400 transition-colors mt-0.5 block whitespace-nowrap">
                           +92 327 1086970
                         </span>
                         <span className="text-xs font-mono text-slate-400 mt-0.5 block font-bold text-emerald-400 flex items-center gap-1.5 group-hover:text-slate-350 transition-colors">
