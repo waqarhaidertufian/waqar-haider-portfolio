@@ -112,7 +112,7 @@ export default function AiDashboard() {
                 <div className="space-y-6">
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase block">PROJECTS COMPLETED</span>
-                    <span className="font-display font-extrabold text-3xl md:text-4xl text-gradient-cyan-purple block mt-1">10 Systems</span>
+                    <span className="font-display font-extrabold text-3xl md:text-4xl text-gradient-cyan-purple block mt-1">68 Systems</span>
                     <span className="text-[11px] text-slate-500 block mt-1 font-mono">ALL DEPLOYED &amp; COMPILING SUCCESSFULLY</span>
                   </div>
 
