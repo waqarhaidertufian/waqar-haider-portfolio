@@ -77,58 +77,87 @@ export default function Navbar({ darkMode, onToggleTheme, activeSection }: Navba
             onClick={(e) => handleClickNav(e, "#home")}
             className="flex items-center gap-2.5 group cursor-pointer"
           >
-            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 border border-cyan-400/20 flex items-center justify-center transition-all duration-500 group-hover:border-cyan-500/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] group-hover:scale-105 overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-              <span className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 via-purple-500/10 to-emerald-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <style>{`
-                @keyframes neonPulse {
-                  0%, 100% {
-                    filter: drop-shadow(0 0 2px rgba(6, 182, 212, 0.4)) drop-shadow(0 0 4px rgba(139, 92, 246, 0.3));
-                    opacity: 1;
+            <div className="relative w-10 h-10 rounded-xl bg-slate-950/60 flex items-center justify-center transition-all duration-500 group-hover:scale-105 overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.15)] group-hover:shadow-[0_0_25px_rgba(6,182,212,0.3)]">
+              {/* Rotating border beam background */}
+              <div className="absolute inset-[-150%] bg-[conic-gradient(from_0deg,transparent_40%,#06b6d4_50%,transparent_60%)] animate-[spin_6s_linear_infinite] opacity-35 group-hover:opacity-75 group-hover:animate-[spin_3s_linear_infinite] transition-opacity duration-500" />
+              <div className="absolute inset-[-150%] bg-[conic-gradient(from_180deg,transparent_40%,#8b5cf6_50%,transparent_60%)] animate-[spin_6s_linear_infinite] opacity-35 group-hover:opacity-75 group-hover:animate-[spin_3s_linear_infinite] transition-opacity duration-500" />
+              
+              {/* Inner solid content area to create 1px border effect */}
+              <div className="absolute inset-[1px] rounded-[11px] bg-slate-950 flex items-center justify-center z-10 overflow-hidden">
+                <span className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 via-purple-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <style>{`
+                  @keyframes luxuryGlow {
+                    0%, 100% {
+                      filter: drop-shadow(0 0 2px rgba(6, 182, 212, 0.35)) drop-shadow(0 0 5px rgba(139, 92, 246, 0.15));
+                      opacity: 0.95;
+                    }
+                    50% {
+                      filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.65)) drop-shadow(0 0 10px rgba(139, 92, 246, 0.45));
+                      opacity: 1;
+                    }
                   }
-                  50% {
-                    filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.8)) drop-shadow(0 0 12px rgba(139, 92, 246, 0.6)) drop-shadow(0 0 18px rgba(16, 185, 129, 0.4));
-                    opacity: 1;
+                  @keyframes dotGlow {
+                    0%, 100% {
+                      filter: drop-shadow(0 0 1px rgba(6, 182, 212, 0.5));
+                      transform: scale(1);
+                    }
+                    50% {
+                      filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.9));
+                      transform: scale(1.15);
+                    }
                   }
-                }
-                .logo-w-pulse {
-                  animation: neonPulse 2s ease-in-out infinite;
-                }
-                .logo-border-pulse {
-                  animation: neonPulse 2s ease-in-out infinite;
-                }
-              `}</style>
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                strokeWidth="1.2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                className="relative z-10 w-5.5 h-5.5"
-              >
-                <defs>
-                  <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#06b6d4" />
-                    <stop offset="50%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#10b981" />
-                  </linearGradient>
-                </defs>
-                {/* Outer W */}
-                <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Inner Parallel W */}
-                <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Top left serif */}
-                <path d="M 1.5 6 H 4.5" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Top right serif */}
-                <path d="M 17.8 6 H 20.8" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Middle peak serif */}
-                <path d="M 10.2 9 H 12.2" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Bottom left serif */}
-                <path d="M 6 18 H 9" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Bottom right serif */}
-                <path d="M 13.3 18 H 16.3" stroke="url(#logoGrad)" className="logo-w-pulse" />
-                {/* Brand dot - static, no animation */}
-                <circle cx="21.2" cy="17.2" r="1.1" fill="#06b6d4" stroke="none" />
-              </svg>
+                  .logo-w-pulse {
+                    animation: luxuryGlow 4s ease-in-out infinite;
+                    transition: stroke-width 0.3s ease, filter 0.3s ease;
+                  }
+                  .group:hover .logo-w-pulse {
+                    stroke-width: 1.5px;
+                    filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.85)) drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
+                  }
+                  .logo-dot {
+                    animation: dotGlow 3s ease-in-out infinite;
+                    transform-origin: 21.2px 17.2px;
+                  }
+                `}</style>
+                <svg 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  strokeWidth="1.2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="relative z-10 w-5.5 h-5.5"
+                >
+                  <defs>
+                    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#06b6d4">
+                        <animate attributeName="stop-color" values="#06b6d4; #8b5cf6; #10b981; #06b6d4" dur="8s" repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="50%" stopColor="#8b5cf6">
+                        <animate attributeName="stop-color" values="#8b5cf6; #10b981; #06b6d4; #8b5cf6" dur="8s" repeatCount="indefinite" />
+                      </stop>
+                      <stop offset="100%" stopColor="#10b981">
+                        <animate attributeName="stop-color" values="#10b981; #06b6d4; #8b5cf6; #10b981" dur="8s" repeatCount="indefinite" />
+                      </stop>
+                    </linearGradient>
+                  </defs>
+                  {/* Outer W */}
+                  <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Inner Parallel W */}
+                  <path d="M 4.5 6 L 8.7 16 L 11.2 11 L 13.7 16 L 17.8 6" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Top left serif */}
+                  <path d="M 1.5 6 H 4.5" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Top right serif */}
+                  <path d="M 17.8 6 H 20.8" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Middle peak serif */}
+                  <path d="M 10.2 9 H 12.2" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Bottom left serif */}
+                  <path d="M 6 18 H 9" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Bottom right serif */}
+                  <path d="M 13.3 18 H 16.3" stroke="url(#logoGrad)" className="logo-w-pulse" />
+                  {/* Brand dot */}
+                  <circle cx="21.2" cy="17.2" r="1.1" fill="#06b6d4" stroke="none" className="logo-dot" />
+                </svg>
+              </div>
             </div>
             <div className="flex flex-col">
               <span className="brand-name-text font-display font-medium text-base md:text-lg tracking-[0.03em] bg-gradient-to-r from-white via-slate-100 to-slate-350 bg-clip-text text-transparent group-hover:from-white group-hover:via-cyan-100 group-hover:to-cyan-300 transition-all duration-300">

@@ -134,21 +134,42 @@ export default function About() {
                 {/* Satellite glowing entities orbiting */}
                 <div className="absolute top-3 right-6 w-3 h-3 rounded-full bg-purple-500 animate-ping" />
 
-                {/* W Logo with blinking animation */}
+                {/* W Logo with premium breathing & liquid gradient animation */}
                 <div className="absolute bottom-4 left-4 w-8 h-8 flex items-center justify-center">
+                  <style>{`
+                    @keyframes wLogoGlow {
+                      0%, 100% {
+                        filter: drop-shadow(0 0 2px rgba(6, 182, 212, 0.4)) drop-shadow(0 0 4px rgba(139, 92, 246, 0.2));
+                        opacity: 0.8;
+                      }
+                      50% {
+                        filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.7)) drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+                        opacity: 1;
+                      }
+                    }
+                    .w-logo-premium {
+                      animation: wLogoGlow 3.5s ease-in-out infinite;
+                    }
+                  `}</style>
                   <svg 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     strokeWidth="1.5" 
                     strokeLinecap="round" 
                     strokeLinejoin="round" 
-                    className="w-6 h-6 animate-pulse"
+                    className="w-6 h-6 w-logo-premium"
                   >
                     <defs>
                       <linearGradient id="wLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#06b6d4" />
-                        <stop offset="50%" stopColor="#8b5cf6" />
-                        <stop offset="100%" stopColor="#10b981" />
+                        <stop offset="0%" stopColor="#06b6d4">
+                          <animate attributeName="stop-color" values="#06b6d4; #8b5cf6; #10b981; #06b6d4" dur="8s" repeatCount="indefinite" />
+                        </stop>
+                        <stop offset="50%" stopColor="#8b5cf6">
+                          <animate attributeName="stop-color" values="#8b5cf6; #10b981; #06b6d4; #8b5cf6" dur="8s" repeatCount="indefinite" />
+                        </stop>
+                        <stop offset="100%" stopColor="#10b981">
+                          <animate attributeName="stop-color" values="#10b981; #06b6d4; #8b5cf6; #10b981" dur="8s" repeatCount="indefinite" />
+                        </stop>
                       </linearGradient>
                     </defs>
                     <path d="M 3 6 L 7.5 18 L 11.2 9 L 14.8 18 L 19.3 6" stroke="url(#wLogoGrad)" />
@@ -208,7 +229,7 @@ export default function About() {
                   My Mission &amp; Vision
                 </h3>
                 <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
-                  For the past several years, I have lived at the interface of software engineering and deep learning. I treat software architectural design to the standards of Vercel or Stripe—where clean code matches flawless, pixel-precise layouts. At the same time, I train deep Neural Networks in PyTorch and TensorFlow that translate physical behaviors, radiography maps, or camera telemetry into high-accuracy logical models.
+                  I build intelligent software that combines clean engineering with practical AI. My focus is on creating scalable web applications, AI-powered automation, and machine learning solutions that solve real-world problems. Every project is designed with performance, maintainability, and user experience in mind—turning ideas into reliable products that create measurable impact.
                 </p>
                 <p className="text-slate-400 text-xs md:text-sm leading-relaxed">
                   Based in Faisalabad, Pakistan, I collaborate globally with enterprise companies, healthcare startups, and innovative SaaS builders. My drive is to eliminate the latency barriers between heavy algorithmic reasoning models and lightweight consumer experiences inside clean, responsive client browsers. If you are preparing to scale a premium digital product backed by real AI science, let's establish a communication tunnel.
